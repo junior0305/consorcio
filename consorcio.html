@@ -2,911 +2,804 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Apê 77 × Porto Seguro — Realize Seu Sonho</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Apê 77 × Porto Seguro — Descubra sua parcela</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════════ */
+/* ═══════════ TOKENS ═══════════ */
 :root{
-  --ink:#04091a;
-  --navy:#071535;
-  --blue:#003DA5;
-  --blue2:#0a4fd4;
-  --blue3:#1a6bff;
-  --blue-glow:rgba(0,61,165,0.5);
-  --gold:#F5C500;
-  --gold2:#FFD740;
-  --gold-glow:rgba(245,197,0,0.4);
-  --white:#f0ede6;
-  --white2:rgba(240,237,230,0.85);
-  --muted:rgba(240,237,230,0.4);
-  --dim:rgba(240,237,230,0.12);
-  --green:#22c55e;
-  --red:#f87171;
-  --r:14px;
+  --ink:#04091a; --navy:#060f28; --blue:#003DA5; --blue2:#0a4fd4;
+  --gold:#F5C500; --gold2:#ffe566; --gold-glow:rgba(245,197,0,.45);
+  --white:#f0ede6; --muted:rgba(240,237,230,.45); --dim:rgba(240,237,230,.1);
+  --green:#22c55e; --red:#f87171;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;overflow:hidden;}
-body{
-  background:var(--ink);
-  color:var(--white);
-  font-family:'DM Sans',sans-serif;
-  position:relative;
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--ink);}
+body{color:var(--white);font-family:'DM Sans',sans-serif;position:relative;}
 
-/* ═══════════════════════════════════════════
-   CANVAS BG
-═══════════════════════════════════════════ */
-#bgCanvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+/* ═══════════ CANVAS ═══════════ */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(rgba(0,61,165,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,61,165,.035) 1px,transparent 1px);
+  background-size:52px 52px;}
 
-/* Blueprint grid overlay */
-body::before{
-  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(0,61,165,0.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,61,165,0.04) 1px,transparent 1px);
-  background-size:48px 48px;
-}
+/* ═══════════ PROGRESS ═══════════ */
+#prog{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.06);z-index:200;}
+#progFill{height:100%;width:0%;background:linear-gradient(90deg,var(--blue2),var(--gold));
+  transition:width .55s cubic-bezier(.4,0,.2,1);box-shadow:0 0 14px var(--gold-glow);}
 
-/* ═══════════════════════════════════════════
-   PROGRESS BAR
-═══════════════════════════════════════════ */
-#progressBar{
-  position:fixed;top:0;left:0;right:0;height:3px;
-  background:rgba(255,255,255,0.06);z-index:100;
-}
-#progressFill{
-  height:100%;
-  background:linear-gradient(90deg,var(--blue3),var(--gold));
-  width:0%;
-  transition:width .6s cubic-bezier(.4,0,.2,1);
-  box-shadow:0 0 12px var(--gold-glow);
-}
+/* ═══════════ TOPBAR ═══════════ */
+#top{position:fixed;top:3px;left:0;right:0;height:58px;z-index:199;
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  background:linear-gradient(to bottom,rgba(4,9,26,.97) 60%,transparent);}
+.t-brand{display:flex;align-items:center;gap:10px;}
+.t-logo{width:38px;height:38px;border-radius:7px;object-fit:contain;
+  filter:drop-shadow(0 0 10px rgba(245,197,0,.5));}
+.t-name{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:3px;color:var(--gold);}
+.t-div{width:1px;height:24px;background:rgba(255,255,255,.08);}
+.t-porto{display:flex;align-items:center;gap:6px;}
+.t-porto-txt{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(111,163,255,.75);line-height:1.3;}
+.t-step{font-size:.7rem;letter-spacing:2px;color:var(--muted);
+  font-family:'DM Sans',sans-serif;text-transform:uppercase;}
 
-/* ═══════════════════════════════════════════
-   HEADER STRIP
-═══════════════════════════════════════════ */
-#topBar{
-  position:fixed;top:3px;left:0;right:0;height:56px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;z-index:99;
-  background:linear-gradient(to bottom,rgba(4,9,26,0.95),transparent);
-}
-.tb-brand{display:flex;align-items:center;gap:10px;}
-.tb-logo{width:36px;height:36px;border-radius:6px;object-fit:contain;
-  filter:drop-shadow(0 0 8px rgba(245,197,0,.5));}
-.tb-name{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;color:var(--gold);}
-.tb-sep{width:1px;height:22px;background:rgba(255,255,255,0.1);}
-.tb-porto{display:flex;align-items:center;gap:6px;opacity:.7;}
-.tb-porto-txt{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(111,163,255,.8);line-height:1.3;}
-.tb-steps{font-family:'DM Sans',sans-serif;font-size:.72rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+/* ═══════════ SCREENS ═══════════ */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:72px 24px 56px;z-index:10;
+  opacity:0;pointer-events:none;overflow-y:auto;
+  transition:opacity .45s ease,transform .45s cubic-bezier(.4,0,.2,1);
+  transform:translateX(40px);}
+.screen.active{opacity:1;pointer-events:all;transform:translateX(0);}
+.screen.out-left{opacity:0;transform:translateX(-40px);}
+.screen.out-right{opacity:0;transform:translateX(40px);}
 
-/* ═══════════════════════════════════════════
-   SCREENS
-═══════════════════════════════════════════ */
-.screen{
-  position:fixed;inset:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:80px 24px 60px;
-  z-index:10;
-  opacity:0;pointer-events:none;
-  transition:opacity .5s ease,transform .5s cubic-bezier(.4,0,.2,1);
-  transform:translateY(20px);
-  overflow-y:auto;
-}
-.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
-.screen.exit-up{opacity:0;transform:translateY(-30px);}
-.screen.exit-down{opacity:0;transform:translateY(30px);}
+/* ═══════════ SCREEN 0 — HERO ═══════════ */
+#s0{text-align:center;}
+.h-badge{display:inline-flex;align-items:center;gap:8px;
+  background:rgba(0,61,165,.18);border:1px solid rgba(0,61,165,.4);
+  padding:7px 18px;border-radius:40px;margin-bottom:32px;
+  opacity:0;animation:up .6s .3s forwards;}
+.h-live{width:7px;height:7px;background:var(--green);border-radius:50%;
+  box-shadow:0 0 8px var(--green);animation:livePulse 1.5s infinite;}
+.h-badge-txt{font-size:.63rem;letter-spacing:2.5px;text-transform:uppercase;color:#6fa3ff;}
 
-/* ═══════════════════════════════════════════
-   SCREEN 0 — HERO
-═══════════════════════════════════════════ */
-#s0{text-align:center;gap:0;}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,61,165,.2);border:1px solid rgba(0,61,165,.4);
-  padding:7px 18px;border-radius:40px;margin-bottom:36px;
-  opacity:0;animation:fadeUp .6s .4s forwards;
-}
-.badge-live{width:7px;height:7px;background:#22c55e;border-radius:50%;
-  box-shadow:0 0 8px #22c55e;animation:livePulse 1.5s infinite;}
-.badge-txt{font-size:.65rem;letter-spacing:2.5px;text-transform:uppercase;color:#6fa3ff;}
-.hero-display{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3.2rem,9vw,7.5rem);
+/* HEADLINE */
+.h-line1{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.1rem,3.5vw,1.6rem);letter-spacing:4px;
+  color:rgba(240,237,230,.35);text-transform:uppercase;
+  opacity:0;animation:up .5s .5s forwards;display:block;margin-bottom:8px;}
+.h-main{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,9vw,7.5rem);
   line-height:.88;letter-spacing:2px;
-  max-width:860px;
-  opacity:0;animation:fadeUp .7s .6s forwards;
-}
-.hero-display .l1{color:var(--white2);}
-.hero-display .l2{color:var(--gold);display:block;}
-.hero-display .l3{color:rgba(255,255,255,.18);}
-.typed-container{display:inline-block;min-width:280px;text-align:left;position:relative;}
-#typedText{color:var(--gold);}
-.cursor-blink{
-  display:inline-block;width:4px;height:.85em;
-  background:var(--gold);margin-left:2px;vertical-align:middle;
-  animation:blink .8s infinite;
-}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+  opacity:0;animation:up .65s .65s forwards;display:block;
+  max-width:820px;margin:0 auto;}
+.h-main .accent{color:var(--gold);
+  text-shadow:0 0 60px rgba(245,197,0,.3);}
+.h-main .soft{color:rgba(240,237,230,.2);}
+.h-sub{font-size:clamp(.9rem,2vw,1.1rem);color:var(--muted);
+  max-width:480px;line-height:1.65;margin:22px auto 0;font-weight:300;
+  opacity:0;animation:up .55s .85s forwards;}
+.h-sub strong{color:var(--white);font-weight:500;}
 
-.hero-pills{
-  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
-  margin:36px 0 40px;
-  opacity:0;animation:fadeUp .6s .9s forwards;
-}
-.pill{
-  display:flex;flex-direction:column;align-items:center;
-  padding:14px 22px;border-radius:12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(8px);
-  position:relative;overflow:hidden;
-}
-.pill::before{content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,61,165,.1),transparent);opacity:0;transition:opacity .3s;}
-.pill:hover::before{opacity:1;}
-.pill-val{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:var(--gold);line-height:1;}
-.pill-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+/* PILLS */
+.h-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  margin:28px 0 36px;opacity:0;animation:up .55s 1s forwards;}
+.pill{padding:10px 18px;border-radius:10px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);}
+.pill-v{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);line-height:1;}
+.pill-l{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 
-.hero-cta{
-  display:inline-flex;align-items:center;gap:12px;
+/* HERO CTA — IMPOSSIBLE TO MISS */
+.h-cta-wrap{opacity:0;animation:up .55s 1.15s forwards;}
+.h-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:14px;
   background:var(--gold);color:var(--ink);
-  font-family:'DM Sans',sans-serif;font-weight:700;
-  font-size:1rem;letter-spacing:.5px;
-  padding:18px 40px;border-radius:50px;border:none;cursor:pointer;
-  box-shadow:0 0 0 0 var(--gold-glow);
-  animation:fadeUp .6s 1.1s forwards,ctaPulse 2.5s 2.5s infinite;
-  opacity:0;transition:transform .2s,box-shadow .2s;
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(1rem,3vw,1.2rem);letter-spacing:.3px;
+  padding:22px 48px;border-radius:60px;border:none;cursor:pointer;
   position:relative;overflow:hidden;
+  box-shadow:0 0 0 0 var(--gold-glow),0 20px 60px rgba(245,197,0,.25);
+  animation:ctaBounce 2.8s 2s infinite;
+  transition:transform .2s;
 }
-.hero-cta::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
-  transform:translateX(-100%);transition:transform .6s;}
-.hero-cta:hover::after{transform:translateX(100%);}
-.hero-cta:hover{transform:scale(1.04);}
-.hero-cta svg{width:18px;height:18px;flex-shrink:0;}
-@keyframes ctaPulse{0%,100%{box-shadow:0 0 0 0 var(--gold-glow);}50%{box-shadow:0 0 0 18px rgba(245,197,0,0);}}
+.h-cta:hover{transform:scale(1.04);}
+.h-cta:active{transform:scale(.97);}
+.h-cta-shine{position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);
+  transform:translateX(-100%);animation:shine 2.5s 3s infinite;}
+.h-cta-arrow{width:26px;height:26px;background:rgba(0,0,0,.15);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:transform .2s;}
+.h-cta:hover .h-cta-arrow{transform:translateX(4px);}
+.h-cta-arrow svg{width:14px;height:14px;}
 
-/* ═══════════════════════════════════════════
-   QUESTION HEADER (all steps)
-═══════════════════════════════════════════ */
-.q-header{text-align:center;margin-bottom:36px;width:100%;max-width:640px;}
-.q-eyebrow{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);margin-bottom:12px;display:block;
-  opacity:0;animation:fadeUp .4s forwards;}
-.q-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2rem,5vw,3.5rem);
-  line-height:.95;letter-spacing:1px;
-  opacity:0;animation:fadeUp .5s .1s forwards;
-}
-.q-title em{font-style:normal;color:var(--gold);}
-.q-title span{color:#6fa3ff;}
-.q-sub{font-size:.85rem;color:var(--muted);margin-top:10px;line-height:1.6;
-  opacity:0;animation:fadeUp .5s .2s forwards;}
+.h-cta-note{font-size:.68rem;color:rgba(240,237,230,.25);
+  margin-top:14px;letter-spacing:1px;text-align:center;}
 
-/* ═══════════════════════════════════════════
-   STEP 1 — PRODUCT
-═══════════════════════════════════════════ */
-.prod-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:14px;width:100%;max-width:600px;
+@keyframes ctaBounce{
+  0%,100%{box-shadow:0 0 0 0 var(--gold-glow),0 20px 60px rgba(245,197,0,.25);}
+  50%{box-shadow:0 0 0 20px rgba(245,197,0,0),0 20px 60px rgba(245,197,0,.25);}
 }
-.prod-opt{
-  background:rgba(7,21,53,.6);
-  border:1.5px solid rgba(0,61,165,.25);
-  border-radius:20px;padding:28px 22px;
-  cursor:pointer;position:relative;overflow:hidden;
-  transition:all .3s cubic-bezier(.175,.885,.32,1.275);
-  backdrop-filter:blur(12px);
-  opacity:0;transform:translateY(20px);
+@keyframes shine{
+  0%{transform:translateX(-100%);}40%,100%{transform:translateX(200%);}
 }
-.prod-opt.visible{opacity:1;transform:translateY(0);}
-.prod-opt::before{content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,61,165,.3),rgba(0,61,165,.05));
-  opacity:0;transition:opacity .3s;}
-.prod-opt:hover{border-color:var(--gold);transform:translateY(-4px) scale(1.02);
-  box-shadow:0 16px 48px rgba(0,0,0,.4),0 0 24px rgba(245,197,0,.15);}
-.prod-opt:hover::before{opacity:1;}
-.prod-opt:active{transform:scale(.97);}
-.po-icon{font-size:2.4rem;margin-bottom:12px;display:block;}
-.po-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:1px;
-  color:var(--white);margin-bottom:4px;}
-.po-sub{font-size:.72rem;color:var(--muted);line-height:1.4;}
-.po-range{font-size:.68rem;color:#6fa3ff;margin-top:8px;letter-spacing:1px;}
-/* Shimmer on hover */
-.prod-opt::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
-  transition:left .4s;}
-.prod-opt:hover::after{left:150%;}
 
-/* ═══════════════════════════════════════════
-   STEP 2 — VALUE RANGES
-═══════════════════════════════════════════ */
-.range-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:12px;width:100%;max-width:600px;
-}
-.range-opt{
-  background:rgba(7,21,53,.6);
-  border:1.5px solid rgba(0,61,165,.2);
-  border-radius:16px;padding:20px 18px;
-  cursor:pointer;position:relative;overflow:hidden;
-  transition:all .3s cubic-bezier(.175,.885,.32,1.275);
-  backdrop-filter:blur(12px);
-  text-align:left;
-  opacity:0;transform:translateY(16px);
-}
-.range-opt.visible{opacity:1;transform:translateY(0);}
-.range-opt:hover{border-color:var(--gold);transform:translateY(-3px);
-  box-shadow:0 12px 40px rgba(0,0,0,.4),0 0 20px rgba(245,197,0,.12);}
-.range-opt:active{transform:scale(.97);}
-.ro-credit{font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:6px;}
-.ro-range{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.5px;
-  color:var(--white);line-height:1;margin-bottom:10px;}
-.ro-divider{height:1px;background:rgba(255,255,255,.07);margin-bottom:10px;}
-.ro-parcela-lbl{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
-.ro-parcela{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);
-  line-height:1;margin-top:2px;}
-.ro-parcela-sub{font-size:.62rem;color:rgba(0,200,100,.6);margin-top:2px;}
+/* ═══════════ Q-HEADER (shared) ═══════════ */
+.qh{text-align:center;margin-bottom:32px;width:100%;max-width:600px;}
+.qh-eye{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:10px;
+  opacity:0;animation:up .4s forwards;}
+.qh-title{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,5.5vw,3.8rem);line-height:.92;letter-spacing:1px;
+  opacity:0;animation:up .5s .1s forwards;}
+.qh-title em{font-style:normal;color:var(--gold);}
+.qh-sub{font-size:.82rem;color:var(--muted);margin-top:10px;line-height:1.6;
+  opacity:0;animation:up .45s .2s forwards;}
 
-/* ═══════════════════════════════════════════
-   STEP 3 & 4 — INPUTS
-═══════════════════════════════════════════ */
-.input-wrap{width:100%;max-width:500px;position:relative;}
-.big-input{
+/* ═══════════ BIG INPUT ═══════════ */
+.inp-wrap{width:100%;max-width:480px;}
+.big-inp{
   width:100%;
-  background:rgba(7,21,53,.5);
-  border:2px solid rgba(0,61,165,.3);
+  background:rgba(6,15,40,.7);
+  border:2px solid rgba(0,61,165,.35);
   color:var(--white);
-  font-family:'DM Serif Display',serif;
-  font-size:clamp(1.4rem,4vw,2.2rem);
-  padding:22px 24px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,6vw,3rem);
+  letter-spacing:2px;
+  padding:22px 26px;
   border-radius:16px;
   outline:none;
-  transition:border-color .3s,box-shadow .3s;
-  backdrop-filter:blur(12px);
   caret-color:var(--gold);
+  transition:border-color .3s,box-shadow .3s;
+  backdrop-filter:blur(16px);
 }
-.big-input::placeholder{color:rgba(240,237,230,.2);}
-.big-input:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 4px rgba(245,197,0,.1),0 16px 48px rgba(0,0,0,.3);
-}
-.input-hint{font-size:.72rem;color:var(--muted);margin-top:12px;text-align:center;
-  letter-spacing:1px;}
-.input-btn{
-  width:100%;margin-top:20px;
+.big-inp::placeholder{color:rgba(240,237,230,.15);font-size:clamp(1.5rem,4vw,2rem);}
+.big-inp:focus{border-color:var(--gold);
+  box-shadow:0 0 0 4px rgba(245,197,0,.1),0 20px 60px rgba(0,0,0,.4);}
+.inp-hint{font-size:.7rem;color:var(--muted);margin-top:10px;text-align:center;letter-spacing:1px;}
+.inp-btn{
+  width:100%;margin-top:18px;
   background:var(--gold);color:var(--ink);
-  font-family:'DM Sans',sans-serif;font-weight:700;
+  font-family:'Syne',sans-serif;font-weight:800;
   font-size:1rem;letter-spacing:.5px;
-  padding:18px;border-radius:12px;border:none;cursor:pointer;
+  padding:19px;border-radius:12px;border:none;cursor:pointer;
   transition:all .25s;position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(245,197,0,.25);
 }
-.input-btn::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);
+.inp-btn::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
   transform:translateX(-100%);transition:transform .5s;}
-.input-btn:hover::after{transform:translateX(100%);}
-.input-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(245,197,0,.35);}
-.input-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.inp-btn:hover::after{transform:translateX(100%);}
+.inp-btn:hover:not(:disabled){transform:translateY(-2px);
+  box-shadow:0 14px 40px rgba(245,197,0,.4);}
+.inp-btn:disabled{opacity:.35;cursor:not-allowed;transform:none !important;}
 
-/* ═══════════════════════════════════════════
-   STEP 5 — RESULT
-═══════════════════════════════════════════ */
-#s5{padding:70px 20px 80px;overflow-y:auto;}
-.result-wrap{width:100%;max-width:600px;margin:0 auto;}
-
-/* Porto Seguro seal — HERO in result */
-.porto-hero{
-  background:linear-gradient(135deg,var(--blue) 0%,#001f6b 100%);
-  border-radius:20px;padding:28px 24px;margin-bottom:20px;
+/* ═══════════ PRODUCT CARDS ═══════════ */
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;
+  width:100%;max-width:580px;}
+.prod-card{
+  background:rgba(6,15,40,.65);
+  border:1.5px solid rgba(0,61,165,.22);
+  border-radius:18px;padding:24px 18px;cursor:pointer;
   position:relative;overflow:hidden;
-  display:flex;align-items:center;gap:20px;
+  transition:all .3s cubic-bezier(.175,.885,.32,1.275);
+  backdrop-filter:blur(14px);
+  opacity:0;transform:translateY(18px);
 }
-.porto-hero::before{
-  content:'';position:absolute;top:-60px;right:-60px;
-  width:200px;height:200px;
-  background:radial-gradient(circle,rgba(255,255,255,.08),transparent);
-  border-radius:50%;
+.prod-card.in{opacity:1;transform:translateY(0);}
+.prod-card::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,61,165,.25),transparent);
+  opacity:0;transition:opacity .3s;}
+.prod-card:hover{border-color:var(--gold);transform:translateY(-4px) scale(1.02);
+  box-shadow:0 18px 50px rgba(0,0,0,.4),0 0 28px rgba(245,197,0,.12);}
+.prod-card:hover::before{opacity:1;}
+.prod-card:active{transform:scale(.96);}
+.pc-icon{font-size:2.2rem;display:block;margin-bottom:10px;}
+.pc-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;margin-bottom:4px;}
+.pc-sub{font-size:.7rem;color:var(--muted);line-height:1.4;}
+.pc-range{font-size:.65rem;color:#6fa3ff;margin-top:8px;letter-spacing:.5px;}
+
+/* ═══════════ RANGE CARDS ═══════════ */
+.range-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  width:100%;max-width:580px;}
+.range-card{
+  background:rgba(6,15,40,.65);
+  border:1.5px solid rgba(0,61,165,.22);
+  border-radius:16px;padding:18px 16px;cursor:pointer;
+  transition:all .3s cubic-bezier(.175,.885,.32,1.275);
+  backdrop-filter:blur(14px);
+  opacity:0;transform:translateY(16px);
+  text-align:left;
 }
-.porto-hero::after{
-  content:'';position:absolute;bottom:-40px;left:-20px;
-  width:160px;height:160px;
-  background:radial-gradient(circle,rgba(245,197,0,.06),transparent);
-  border-radius:50%;
-}
-.porto-shield-big{flex-shrink:0;position:relative;z-index:1;}
-.porto-hero-text{position:relative;z-index:1;}
-.porto-hero-label{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;
+.range-card.in{opacity:1;transform:translateY(0);}
+.range-card:hover{border-color:var(--gold);transform:translateY(-3px);
+  box-shadow:0 14px 44px rgba(0,0,0,.4),0 0 22px rgba(245,197,0,.1);}
+.range-card:active{transform:scale(.97);}
+.rc-credit-lbl{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:5px;}
+/* RANGE VALUE — BIG & VISIBLE */
+.rc-range{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;
+  color:var(--white);letter-spacing:.5px;line-height:1;margin-bottom:12px;}
+.rc-div{height:1px;background:rgba(255,255,255,.07);margin-bottom:12px;}
+.rc-par-lbl{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
   color:rgba(255,255,255,.5);margin-bottom:4px;}
-.porto-hero-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;
-  color:#fff;line-height:1;}
-.porto-hero-sub{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:3px;line-height:1.4;}
-.porto-hero-badges{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
-.ph-badge{background:rgba(255,255,255,.12);border-radius:4px;padding:3px 10px;
-  font-size:.6rem;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);}
+/* PARCELA — DESTAQUE TOTAL */
+.rc-par{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;
+  color:var(--gold);line-height:1;
+  text-shadow:0 0 24px rgba(245,197,0,.35);}
+.rc-par-per{font-size:.65rem;color:rgba(245,197,0,.6);margin-left:3px;}
+.rc-par-note{font-size:.6rem;color:rgba(34,197,94,.65);margin-top:4px;}
 
-/* Parcela hero */
-.parcela-hero{
-  background:rgba(7,21,53,.8);border:1px solid rgba(0,61,165,.4);
-  border-radius:20px;padding:28px 24px;margin-bottom:16px;text-align:center;
+/* ═══════════ RESULT ═══════════ */
+#s5{padding:64px 18px 80px;overflow-y:auto;}
+.res-wrap{width:100%;max-width:580px;margin:0 auto;
+  display:flex;flex-direction:column;gap:14px;}
+
+/* PORTO SEGURO BLOCK — HERO */
+.porto-block{
+  background:linear-gradient(135deg,#002d7a 0%,#001a4d 100%);
+  border-radius:20px;padding:24px 22px;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;gap:18px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.porto-block::after{content:'';position:absolute;
+  top:-80px;right:-80px;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(255,255,255,.06),transparent);
+  border-radius:50%;}
+.porto-shield{flex-shrink:0;position:relative;z-index:1;}
+.porto-txt{position:relative;z-index:1;}
+.porto-eyebrow{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.4);margin-bottom:4px;}
+.porto-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;
+  letter-spacing:2px;color:#fff;line-height:1;}
+.porto-cnpj{font-size:.62rem;color:rgba(255,255,255,.4);margin-top:3px;line-height:1.4;}
+.porto-badges{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.pb{background:rgba(255,255,255,.1);border-radius:4px;padding:3px 10px;
+  font-size:.58rem;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);}
+
+/* PARCELA CARD */
+.parcela-card{
+  background:rgba(6,15,40,.85);
+  border:1px solid rgba(0,61,165,.4);
+  border-radius:20px;padding:26px 22px;text-align:center;
   position:relative;overflow:hidden;
 }
-.parcela-hero::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 100%,rgba(245,197,0,.06),transparent 60%);}
-.ph-label{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:#6fa3ff;margin-bottom:8px;}
-.ph-value{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3rem,10vw,5rem);
+.parcela-card::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 110%,rgba(245,197,0,.07),transparent 60%);}
+.par-name-lbl{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
+  color:#6fa3ff;margin-bottom:8px;}
+/* PARCELA VALUE — ENORME */
+.par-value{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,12vw,5.5rem);
   color:var(--gold);line-height:1;
-  text-shadow:0 0 48px rgba(245,197,0,.4);
-  opacity:0;transition:opacity .6s;
-}
-.ph-value.show{opacity:1;}
-.ph-period{font-size:.78rem;color:var(--muted);margin-top:4px;}
-.ph-detail{display:flex;justify-content:center;gap:20px;margin-top:16px;flex-wrap:wrap;}
-.ph-d-item{text-align:center;}
-.ph-d-val{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--white);line-height:1;}
-.ph-d-lbl{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+  text-shadow:0 0 60px rgba(245,197,0,.45);
+  opacity:0;transition:opacity .8s,transform .8s;
+  transform:scale(.85);}
+.par-value.show{opacity:1;transform:scale(1);}
+.par-period{font-size:.75rem;color:var(--muted);margin-top:4px;}
+.par-details{display:flex;justify-content:center;gap:18px;
+  margin-top:18px;padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;}
+.pd-item{text-align:center;}
+/* DETAIL VALUES — VISÍVEIS */
+.pd-val{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;
+  color:var(--white);line-height:1;}
+.pd-lbl{font-size:.57rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(240,237,230,.4);margin-top:3px;}
 
-/* Comparison */
-.comparison{
-  background:rgba(7,21,53,.6);border:1px solid rgba(0,61,165,.25);
-  border-radius:20px;padding:24px;margin-bottom:16px;
-  backdrop-filter:blur(12px);
+/* COMPARISON */
+.cmp-card{
+  background:rgba(6,15,40,.7);border:1px solid rgba(0,61,165,.2);
+  border-radius:18px;padding:22px 18px;backdrop-filter:blur(12px);
 }
-.cmp-title{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.cmp-title{font-size:.6rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);text-align:center;
+  display:flex;align-items:center;gap:8px;margin-bottom:18px;}
 .cmp-title::before,.cmp-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);}
-.cmp-row{
-  display:grid;grid-template-columns:1fr auto 1fr;
-  gap:12px;align-items:center;margin-bottom:14px;
-}
+.cmp-cols{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;
+  align-items:center;margin-bottom:14px;}
 .cmp-col{text-align:center;}
-.cmp-tag{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
-.cmp-tag.red{color:rgba(248,113,113,.7);}
-.cmp-tag.gold{color:var(--gold);}
-.cmp-box{border-radius:12px;padding:16px 12px;}
-.cmp-box.red-box{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);}
-.cmp-box.gold-box{background:rgba(245,197,0,.1);border:1px solid rgba(245,197,0,.3);}
-.cmp-val{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;}
-.cmp-val.red{color:var(--red);}
-.cmp-val.gold{color:var(--gold);}
-.cmp-val-sub{font-size:.62rem;color:var(--muted);margin-top:3px;}
-.cmp-vs{
-  width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+.cmp-tag{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:7px;}
+.cmp-tag.r{color:rgba(248,113,113,.7);}
+.cmp-tag.g{color:rgba(245,197,0,.9);}
+.cmp-box{border-radius:10px;padding:14px 10px;}
+.cmp-box.rb{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.18);}
+.cmp-box.gb{background:rgba(245,197,0,.09);border:1px solid rgba(245,197,0,.28);}
+/* CMP VALUES — VISÍVEIS */
+.cmp-val{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;line-height:1;}
+.cmp-val.r{color:var(--red);}
+.cmp-val.g{color:var(--gold);}
+.cmp-sub{font-size:.6rem;color:var(--muted);margin-top:3px;}
+.cmp-vs{width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
   display:flex;align-items:center;justify-content:center;
-  font-size:.72rem;color:var(--muted);flex-shrink:0;margin:0 auto;
-}
+  font-size:.65rem;color:var(--muted);margin:0 auto;}
 .cmp-savings{
-  background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(34,197,94,.05));
-  border:1px solid rgba(34,197,94,.2);
-  border-radius:12px;padding:16px;
-  display:flex;justify-content:space-between;align-items:center;
-  flex-wrap:wrap;gap:10px;
-}
-.sav-item{text-align:center;}
-.sav-lbl{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(34,197,94,.6);}
-.sav-val{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--green);line-height:1.1;}
+  background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(34,197,94,.03));
+  border:1px solid rgba(34,197,94,.18);border-radius:10px;
+  padding:14px;display:flex;justify-content:space-around;
+  align-items:center;flex-wrap:wrap;gap:8px;}
+.sv-item{text-align:center;}
+.sv-lbl{font-size:.57rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(34,197,94,.6);}
+/* SAVINGS — VISÍVEIS */
+.sv-val{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;
+  color:var(--green);line-height:1.1;margin-top:2px;}
 
-/* WPP CTA */
-.wpp-cta{
+/* WPP BUTTON */
+.wpp-btn{
   width:100%;display:flex;align-items:center;justify-content:center;gap:12px;
   background:#25D366;color:#fff;
-  font-family:'DM Sans',sans-serif;font-weight:700;font-size:1rem;
-  padding:20px;border-radius:14px;border:none;cursor:pointer;
-  text-decoration:none;margin-top:16px;
-  box-shadow:0 8px 32px rgba(37,211,102,.3);
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;
+  padding:21px;border-radius:14px;border:none;cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 8px 36px rgba(37,211,102,.3);
   position:relative;overflow:hidden;
-  animation:wppPulse 2.5s 1s infinite;
+  animation:wppPulse 2.5s 1.5s infinite;
+  transition:transform .2s,box-shadow .2s;
 }
-.wpp-cta::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.2) 50%,transparent 70%);
+.wpp-btn::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);
   transform:translateX(-100%);transition:transform .5s;}
-.wpp-cta:hover::after{transform:translateX(100%);}
-.wpp-cta:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(37,211,102,.5);}
-.wpp-cta svg{width:22px;height:22px;fill:#fff;flex-shrink:0;}
-.result-note{font-size:.62rem;color:rgba(240,237,230,.2);text-align:center;
-  margin-top:12px;line-height:1.6;}
-.restart-btn{display:block;text-align:center;background:none;border:none;
-  color:rgba(240,237,230,.25);font-size:.72rem;cursor:pointer;margin-top:14px;
-  transition:color .2s;font-family:'DM Sans',sans-serif;letter-spacing:1px;}
-.restart-btn:hover{color:var(--white);}
+.wpp-btn:hover::after{transform:translateX(100%);}
+.wpp-btn:hover{transform:translateY(-2px);box-shadow:0 14px 44px rgba(37,211,102,.5);}
+.wpp-btn svg{width:22px;height:22px;fill:#fff;flex-shrink:0;}
 
-/* ═══════════════════════════════════════════
-   PORTO SEAL (watermark in body)
-═══════════════════════════════════════════ */
-.porto-watermark{
-  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-  display:flex;align-items:center;gap:10px;opacity:.18;pointer-events:none;
+.res-note{font-size:.6rem;color:rgba(240,237,230,.18);
+  text-align:center;line-height:1.6;}
+.res-restart{display:block;text-align:center;background:none;border:none;
+  color:rgba(240,237,230,.2);font-size:.7rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;letter-spacing:1px;
+  transition:color .2s;padding:6px;}
+.res-restart:hover{color:var(--muted);}
+
+/* STATUS BADGE */
+.status-badge{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);
+  border-radius:30px;padding:8px 20px;
+  font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--green);z-index:300;
+  opacity:0;transition:opacity .4s;pointer-events:none;
   white-space:nowrap;
 }
-.pw-text{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;
-  color:#6fa3ff;}
+.status-badge.show{opacity:1;}
 
-/* ═══════════════════════════════════════════
-   WPP FLOAT
-═══════════════════════════════════════════ */
-#wppFloat{
-  position:fixed;bottom:24px;right:24px;z-index:200;
-  opacity:0;animation:fadeUp .5s 3s forwards;
-}
-.wf-btn{
-  display:flex;align-items:center;gap:8px;
-  background:#25D366;color:#fff;
-  font-family:'DM Sans',sans-serif;font-weight:700;font-size:.75rem;
-  padding:12px 18px;border-radius:40px;
-  text-decoration:none;border:none;cursor:pointer;
+/* WPP FLOAT */
+#wf{position:fixed;bottom:24px;right:22px;z-index:300;
+  opacity:0;animation:up .5s 3s forwards;}
+.wf-a{display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;
+  padding:11px 17px;border-radius:40px;text-decoration:none;
   box-shadow:0 4px 20px rgba(37,211,102,.4);
-  animation:wppPulse 3s 4s infinite;
-}
-.wf-btn svg{width:16px;height:16px;fill:#fff;}
+  animation:wppPulse 3s 4s infinite;}
+.wf-a svg{width:15px;height:15px;fill:#fff;}
 
-/* ═══════════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════════ */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-@keyframes livePulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}}
+/* ═══════════ KEYFRAMES ═══════════ */
+@keyframes up{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes livePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.5);opacity:.4;}}
 @keyframes wppPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.5);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0);}}
 
-/* ═══════════════════════════════════════════
-   MOBILE
-═══════════════════════════════════════════ */
-@media(max-width:600px){
-  #topBar{padding:0 16px;}
-  .tb-steps{display:none;}
-  .screen{padding:70px 16px 60px;}
-  .prod-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .prod-opt{padding:20px 14px;}
-  .range-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .hero-display{font-size:clamp(2.8rem,9vw,4rem);}
-  .hero-pills{gap:8px;}
-  .pill{padding:12px 16px;}
+/* ═══════════ MOBILE ═══════════ */
+@media(max-width:480px){
+  #top{padding:0 14px;}
+  .t-step{display:none;}
+  .screen{padding:66px 14px 54px;}
+  .prod-grid,.range-grid{grid-template-columns:1fr 1fr;gap:9px;}
+  .h-cta{padding:20px 32px;font-size:.95rem;}
+  .h-pills{gap:7px;}
+  .pill{padding:9px 13px;}
 }
 </style>
 </head>
 <body>
 
-<!-- BG CANVAS -->
-<canvas id="bgCanvas"></canvas>
+<!-- CANVAS -->
+<canvas id="bg"></canvas>
 
 <!-- PROGRESS -->
-<div id="progressBar"><div id="progressFill"></div></div>
+<div id="prog"><div id="progFill"></div></div>
 
-<!-- TOP BAR -->
-<div id="topBar">
-  <div class="tb-brand">
-    <img src="/mnt/user-data/uploads/WhatsApp_Image_2026-04-13_at_23_44_32.jpeg" alt="Apê 77" class="tb-logo">
-    <div class="tb-name">Apê 77</div>
-    <div class="tb-sep"></div>
-    <div class="tb-porto">
-      <svg width="14" height="16" viewBox="0 0 40 44" fill="none">
-        <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(111,163,255,0.3)"/>
-        <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(111,163,255,0.6)"/>
+<!-- TOPBAR -->
+<div id="top">
+  <div class="t-brand">
+    <img src="/mnt/user-data/uploads/WhatsApp_Image_2026-04-13_at_23_44_32.jpeg" alt="Apê 77" class="t-logo">
+    <div class="t-name">Apê 77</div>
+    <div class="t-div"></div>
+    <div class="t-porto">
+      <svg width="13" height="15" viewBox="0 0 40 44" fill="none">
+        <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(111,163,255,.25)"/>
+        <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(111,163,255,.55)"/>
         <text x="20" y="27" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="13">P</text>
       </svg>
-      <div class="tb-porto-txt">Porto Seguro<br>Consórcio</div>
+      <div class="t-porto-txt">Porto Seguro<br>Consórcio</div>
     </div>
   </div>
-  <div class="tb-steps" id="stepCounter"></div>
+  <div class="t-step" id="stepTxt"></div>
 </div>
 
+<!-- STATUS BADGE -->
+<div class="status-badge" id="statusBadge">✓ Dados salvos com segurança</div>
+
 <!-- WPP FLOAT -->
-<div id="wppFloat">
-  <a href="https://wa.me/SEU_NUMERO" class="wf-btn" target="_blank">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<div id="wf">
+  <a href="https://wa.me/SEU_NUMERO" class="wf-a" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.1 6.1 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Falar agora
   </a>
 </div>
 
-<!-- ════════════════════════════════════════
-     SCREEN 0 — HERO
-════════════════════════════════════════ -->
+<!-- ══════════════════════════════
+     S0 — HERO
+══════════════════════════════ -->
 <div class="screen active" id="s0">
-  <div class="hero-badge">
-    <div class="badge-live"></div>
-    <span class="badge-txt">Parceiro Oficial Porto Seguro · Atendimento em até 2h</span>
+  <div class="h-badge">
+    <div class="h-live"></div>
+    <span class="h-badge-txt">Parceiro Oficial Porto Seguro · Atendimento em até 2h</span>
   </div>
-  <div class="hero-display">
-    <span class="l1">Seu sonho</span>
-    <span class="l2">começa com uma</span>
-    <span class="l3">só <div class="typed-container"><span id="typedText"></span><span class="cursor-blink"></span></div></span>
+
+  <span class="h-line1">Consórcio sem juros · sem entrada</span>
+
+  <span class="h-main">
+    Você está pagando<br>
+    <span class="accent">caro demais</span><br>
+    <span class="soft">pelo seu sonho.</span>
+  </span>
+
+  <p class="h-sub">
+    Descubra em <strong>30 segundos</strong> qual seria sua parcela
+    sem pagar nada de juros — e quanto você está perdendo
+    com o financiamento bancário.
+  </p>
+
+  <div class="h-pills">
+    <div class="pill"><div class="pill-v">0%</div><div class="pill-l">Juros</div></div>
+    <div class="pill"><div class="pill-v">R$ 0</div><div class="pill-l">Entrada</div></div>
+    <div class="pill"><div class="pill-v">R$ 340</div><div class="pill-l">A partir de/mês</div></div>
+    <div class="pill"><div class="pill-v">-25%</div><div class="pill-l">Redutor</div></div>
   </div>
-  <div class="hero-pills">
-    <div class="pill"><div class="pill-val">0%</div><div class="pill-lbl">Juros</div></div>
-    <div class="pill"><div class="pill-val">R$ 0</div><div class="pill-lbl">Entrada</div></div>
-    <div class="pill"><div class="pill-val">R$ 340</div><div class="pill-lbl">A partir de/mês</div></div>
-    <div class="pill"><div class="pill-val">-25%</div><div class="pill-lbl">Na parcela</div></div>
-  </div>
-  <button class="hero-cta" onclick="goTo(1)">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-    Descobrir minha parcela agora
-  </button>
-  <div class="porto-watermark">
-    <svg width="16" height="18" viewBox="0 0 40 44" fill="none"><path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(111,163,255,0.4)"/><path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(111,163,255,0.7)"/><text x="20" y="27" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="13">P</text></svg>
-    <span class="pw-text">Porto Seguro Administradora de Consórcios · CNPJ 48.041.735/0001-90</span>
+
+  <div class="h-cta-wrap">
+    <button class="h-cta" onclick="go(1)">
+      <span class="h-cta-shine"></span>
+      <span>Quero descobrir minha parcela</span>
+      <div class="h-cta-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </div>
+    </button>
+    <div class="h-cta-note">Gratuito · Sem compromisso · 30 segundos</div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════
-     SCREEN 1 — PRODUTO
-════════════════════════════════════════ -->
+<!-- ══════════════════════════════
+     S1 — NOME
+══════════════════════════════ -->
 <div class="screen" id="s1">
-  <div class="q-header">
-    <span class="q-eyebrow">Passo 1 de 4</span>
-    <div class="q-title">Qual é o seu <em>sonho?</em></div>
-    <p class="q-sub">Toque para escolher e avançar automaticamente.</p>
+  <div class="qh">
+    <span class="qh-eye">Antes de tudo</span>
+    <div class="qh-title">Como posso te <em>chamar?</em></div>
+    <p class="qh-sub">Só seu primeiro nome já está ótimo.</p>
   </div>
-  <div class="prod-grid">
-    <div class="prod-opt" onclick="selectProduct('imovel',this)">
-      <span class="po-icon">🏠</span>
-      <div class="po-title">Imóvel</div>
-      <div class="po-sub">Casa, apartamento, terreno, construção ou reforma</div>
-      <div class="po-range">R$ 70k – R$ 900k</div>
-    </div>
-    <div class="prod-opt" onclick="selectProduct('carro',this)">
-      <span class="po-icon">🚗</span>
-      <div class="po-title">Carro</div>
-      <div class="po-sub">Novo ou seminovo até 8 anos de fabricação</div>
-      <div class="po-range">R$ 30k – R$ 200k</div>
-    </div>
-    <div class="prod-opt" onclick="selectProduct('moto',this)">
-      <span class="po-icon">🏍️</span>
-      <div class="po-title">Moto</div>
-      <div class="po-sub">Novas ou seminovas, todas as cilindradas</div>
-      <div class="po-range">R$ 10k – R$ 30k</div>
-    </div>
-    <div class="prod-opt" onclick="selectProduct('pesado',this)">
-      <span class="po-icon">🚛</span>
-      <div class="po-title">Caminhão</div>
-      <div class="po-sub">Pesados, ônibus, tratores e máquinas agrícolas</div>
-      <div class="po-range">R$ 180k – R$ 360k</div>
-    </div>
-  </div>
-  <div class="porto-watermark">
-    <svg width="14" height="16" viewBox="0 0 40 44" fill="none"><path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(111,163,255,0.3)"/><path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(111,163,255,0.6)"/><text x="20" y="27" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="12">P</text></svg>
-    <span class="pw-text">Porto Seguro Consórcio · Parceiro Autorizado</span>
+  <div class="inp-wrap">
+    <input type="text" class="big-inp" id="nameInp"
+      placeholder="Seu nome..."
+      autocomplete="given-name"
+      oninput="onName(this)">
+    <div class="inp-hint">Pressione Enter para avançar</div>
+    <button class="inp-btn" id="nameBtn" onclick="doName()" disabled>
+      Continuar →
+    </button>
   </div>
 </div>
 
-<!-- ════════════════════════════════════════
-     SCREEN 2 — FAIXA DE VALOR
-════════════════════════════════════════ -->
+<!-- ══════════════════════════════
+     S2 — TELEFONE
+══════════════════════════════ -->
 <div class="screen" id="s2">
-  <div class="q-header">
-    <span class="q-eyebrow">Passo 2 de 4</span>
-    <div class="q-title" id="s2Title">Qual faixa de <em>valor?</em></div>
-    <p class="q-sub">Escolha pela parcela que cabe no seu bolso.</p>
+  <div class="qh">
+    <span class="qh-eye" id="s2Eye">Passo 1 de 3</span>
+    <div class="qh-title" id="s2Title">Qual seu <em>WhatsApp?</em></div>
+    <p class="qh-sub">Seu consultor entra em contato em até 2 horas.</p>
+  </div>
+  <div class="inp-wrap">
+    <input type="tel" class="big-inp" id="phoneInp"
+      placeholder="(XX) XXXXX-XXXX"
+      autocomplete="tel"
+      oninput="onPhone(this)">
+    <div class="inp-hint">Apenas WhatsApp ativo</div>
+    <button class="inp-btn" id="phoneBtn" onclick="doPhone()" disabled>
+      Continuar →
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     S3 — PRODUTO
+══════════════════════════════ -->
+<div class="screen" id="s3">
+  <div class="qh">
+    <span class="qh-eye">Passo 2 de 3</span>
+    <div class="qh-title" id="s3Title">Qual é o seu <em>sonho?</em></div>
+    <p class="qh-sub">Escolha e avançamos automaticamente.</p>
+  </div>
+  <div class="prod-grid" id="prodGrid">
+    <div class="prod-card" onclick="doProd('imovel',this)">
+      <span class="pc-icon">🏠</span>
+      <div class="pc-title">Imóvel</div>
+      <div class="pc-sub">Casa, apto, terreno ou reforma</div>
+      <div class="pc-range">R$ 70k a R$ 900k · 200 meses</div>
+    </div>
+    <div class="prod-card" onclick="doProd('carro',this)">
+      <span class="pc-icon">🚗</span>
+      <div class="pc-title">Carro</div>
+      <div class="pc-sub">Novo ou seminovo até 8 anos</div>
+      <div class="pc-range">R$ 30k a R$ 200k · 80 meses</div>
+    </div>
+    <div class="prod-card" onclick="doProd('moto',this)">
+      <span class="pc-icon">🏍️</span>
+      <div class="pc-title">Moto</div>
+      <div class="pc-sub">Nova ou seminova</div>
+      <div class="pc-range">R$ 10k a R$ 30k · 80 meses</div>
+    </div>
+    <div class="prod-card" onclick="doProd('pesado',this)">
+      <span class="pc-icon">🚛</span>
+      <div class="pc-title">Caminhão</div>
+      <div class="pc-sub">Pesados, ônibus e tratores</div>
+      <div class="pc-range">R$ 180k a R$ 360k · 120 meses</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     S4 — FAIXA
+══════════════════════════════ -->
+<div class="screen" id="s4">
+  <div class="qh">
+    <span class="qh-eye">Passo 3 de 3</span>
+    <div class="qh-title" id="s4Title">Qual faixa de <em>valor?</em></div>
+    <p class="qh-sub">Escolha pela parcela que cabe no seu bolso.</p>
   </div>
   <div class="range-grid" id="rangeGrid"></div>
-  <div class="porto-watermark">
-    <svg width="14" height="16" viewBox="0 0 40 44" fill="none"><path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(111,163,255,0.3)"/><path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(111,163,255,0.6)"/></svg>
-    <span class="pw-text">Taxas reais Porto Seguro · Sem letras miúdas</span>
-  </div>
 </div>
 
-<!-- ════════════════════════════════════════
-     SCREEN 3 — NOME
-════════════════════════════════════════ -->
-<div class="screen" id="s3">
-  <div class="q-header">
-    <span class="q-eyebrow">Passo 3 de 4</span>
-    <div class="q-title" id="s3Title">Como posso te <em>chamar?</em></div>
-    <p class="q-sub" id="s3Sub">Seu nome para personalizar a proposta.</p>
-  </div>
-  <div class="input-wrap">
-    <input type="text" class="big-input" id="nameInput" placeholder="Seu nome aqui..."
-      autocomplete="given-name" oninput="onNameInput(this)">
-    <div class="input-hint">Pressione Enter ou clique em avançar</div>
-    <button class="input-btn" id="nameBtn" onclick="submitName()" disabled>Avançar →</button>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     SCREEN 4 — TELEFONE
-════════════════════════════════════════ -->
-<div class="screen" id="s4">
-  <div class="q-header">
-    <span class="q-eyebrow">Passo 4 de 4</span>
-    <div class="q-title" id="s4Title">Qual seu <em>WhatsApp?</em></div>
-    <p class="q-sub" id="s4Sub">Seu consultor vai entrar em contato em até 2 horas.</p>
-  </div>
-  <div class="input-wrap">
-    <input type="tel" class="big-input" id="phoneInput" placeholder="(XX) XXXXX-XXXX"
-      autocomplete="tel" oninput="onPhoneInput(this)">
-    <div class="input-hint">Apenas WhatsApp ativo</div>
-    <button class="input-btn" id="phoneBtn" onclick="submitPhone()" disabled>Ver minha parcela →</button>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     SCREEN 5 — RESULTADO
-════════════════════════════════════════ -->
+<!-- ══════════════════════════════
+     S5 — RESULTADO
+══════════════════════════════ -->
 <div class="screen" id="s5">
-  <div class="result-wrap">
+  <div class="res-wrap">
 
-    <!-- Porto Seguro Hero Block -->
-    <div class="porto-hero">
-      <div class="porto-shield-big">
-        <svg width="56" height="64" viewBox="0 0 40 44" fill="none">
-          <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(255,255,255,0.15)"/>
-          <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(255,255,255,0.35)"/>
-          <path d="M20 6L8 10.5V22c0 7.2 5 13.5 12 15.2 7-1.7 12-8 12-15.2V10.5L20 6z" fill="rgba(255,255,255,0.12)"/>
+    <!-- Porto Seguro Hero -->
+    <div class="porto-block">
+      <div class="porto-shield">
+        <svg width="52" height="60" viewBox="0 0 40 44" fill="none">
+          <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(255,255,255,.12)"/>
+          <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(255,255,255,.32)"/>
+          <path d="M20 6L8 10.5V22c0 7.2 5 13.5 12 15.2 7-1.7 12-8 12-15.2V10.5L20 6z" fill="rgba(255,255,255,.1)"/>
           <text x="20" y="28" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="14">P</text>
         </svg>
       </div>
-      <div class="porto-hero-text">
-        <div class="porto-hero-label">Simulação via</div>
-        <div class="porto-hero-name">Porto Seguro Consórcio</div>
-        <div class="porto-hero-sub">Administradora regulada pelo Banco Central do Brasil<br>CNPJ: 48.041.735/0001-90</div>
-        <div class="porto-hero-badges">
-          <div class="ph-badge">Banco Central</div>
-          <div class="ph-badge">Grupo Porto</div>
-          <div class="ph-badge">0% Juros</div>
+      <div class="porto-txt">
+        <div class="porto-eyebrow">Simulação via parceiro oficial</div>
+        <div class="porto-name">Porto Seguro Consórcio</div>
+        <div class="porto-cnpj">Regulada pelo Banco Central · CNPJ: 48.041.735/0001-90</div>
+        <div class="porto-badges">
+          <div class="pb">Banco Central</div>
+          <div class="pb">0% Juros</div>
+          <div class="pb">Grupo Porto</div>
         </div>
       </div>
     </div>
 
     <!-- Parcela -->
-    <div class="parcela-hero">
-      <div class="ph-label" id="rLabel">Sua parcela estimada</div>
-      <div class="ph-value" id="rParcela">—</div>
-      <div class="ph-period" id="rPeriod">por mês · com redutor de 25% até a contemplação</div>
-      <div class="ph-detail">
-        <div class="ph-d-item"><div class="ph-d-val" id="rCredit">—</div><div class="ph-d-lbl">Crédito</div></div>
-        <div class="ph-d-item"><div class="ph-d-val" id="rPrazo">—</div><div class="ph-d-lbl">Prazo</div></div>
-        <div class="ph-d-item"><div class="ph-d-val" id="rTaxa">—</div><div class="ph-d-lbl">Taxa adm.</div></div>
-        <div class="ph-d-item"><div class="ph-d-val" id="rTotal">—</div><div class="ph-d-lbl">Custo total</div></div>
+    <div class="parcela-card">
+      <div class="par-name-lbl" id="parLabel">Sua parcela estimada</div>
+      <div class="par-value" id="parValue">—</div>
+      <div class="par-period" id="parPeriod">por mês · com 25% de redutor até a contemplação</div>
+      <div class="par-details">
+        <div class="pd-item">
+          <div class="pd-val" id="pdCredit">—</div>
+          <div class="pd-lbl">Crédito</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-val" id="pdPrazo">—</div>
+          <div class="pd-lbl">Prazo</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-val" id="pdTaxa">—</div>
+          <div class="pd-lbl">Taxa adm.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-val" id="pdTotal">—</div>
+          <div class="pd-lbl">Custo total</div>
+        </div>
       </div>
     </div>
 
     <!-- Comparação -->
-    <div class="comparison">
-      <div class="cmp-title">Consórcio vs Financiamento</div>
-      <div class="cmp-row">
+    <div class="cmp-card">
+      <div class="cmp-title">Consórcio vs Financiamento bancário</div>
+      <div class="cmp-cols">
         <div class="cmp-col">
-          <div class="cmp-tag red">🏦 Financiamento bancário</div>
-          <div class="cmp-box red-box">
-            <div class="cmp-val red" id="cFinanc">—</div>
-            <div class="cmp-val-sub">por mês com juros</div>
+          <div class="cmp-tag r">🏦 Financiamento</div>
+          <div class="cmp-box rb">
+            <div class="cmp-val r" id="cmpF">—</div>
+            <div class="cmp-sub">por mês com juros</div>
           </div>
         </div>
-        <div class="cmp-vs">VS</div>
+        <div><div class="cmp-vs">VS</div></div>
         <div class="cmp-col">
-          <div class="cmp-tag gold">⚡ Consórcio Apê 77</div>
-          <div class="cmp-box gold-box">
-            <div class="cmp-val gold" id="cCons">—</div>
-            <div class="cmp-val-sub">por mês sem juros</div>
+          <div class="cmp-tag g">⚡ Consórcio</div>
+          <div class="cmp-box gb">
+            <div class="cmp-val g" id="cmpC">—</div>
+            <div class="cmp-sub">por mês sem juros</div>
           </div>
         </div>
       </div>
       <div class="cmp-savings">
-        <div class="sav-item"><div class="sav-lbl">Economia mensal</div><div class="sav-val" id="cEcoMes">—</div></div>
-        <div class="sav-item"><div class="sav-lbl">Economia no prazo</div><div class="sav-val" id="cEcoTotal">—</div></div>
-        <div class="sav-item"><div class="sav-lbl">% mais barato</div><div class="sav-val" id="cEcoPct">—</div></div>
+        <div class="sv-item">
+          <div class="sv-lbl">Economia/mês</div>
+          <div class="sv-val" id="svM">—</div>
+        </div>
+        <div class="sv-item">
+          <div class="sv-lbl">Economia total</div>
+          <div class="sv-val" id="svT">—</div>
+        </div>
+        <div class="sv-item">
+          <div class="sv-lbl">% mais barato</div>
+          <div class="sv-val" id="svP">—</div>
+        </div>
       </div>
     </div>
 
-    <!-- WPP CTA -->
-    <a href="#" id="wppResultBtn" class="wpp-cta" target="_blank">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span id="wppBtnText">Falar com meu consultor agora</span>
+    <!-- WPP -->
+    <a href="#" id="wppBtn" class="wpp-btn" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a6.1 6.1 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span id="wppTxt">Falar com consultor agora</span>
     </a>
-    <div class="result-note" id="rNote">* Simulação baseada nas taxas reais Porto Seguro. Parcela reduzida com 25% até contemplação.<br>Contemplação por sorteio ou lance. Uso do FGTS sujeito às normas da CAIXA.</div>
-    <button class="restart-btn" onclick="restart()">← Refazer simulação</button>
+
+    <div class="res-note">* Simulação com taxas reais Porto Seguro. Parcela reduzida 25% até contemplação.<br>Contemplação por sorteio ou lance · Uso do FGTS sujeito às normas da CAIXA.</div>
+    <button class="res-restart" onclick="restart()">← Refazer simulação</button>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
+<!-- ════════════════════════════════════════
      SCRIPTS
-═══════════════════════════════════════════════════ -->
+════════════════════════════════════════ -->
 <script>
-/* ── CANVAS BACKGROUND ── */
+/* ══ GOOGLE SHEETS URL ══
+   Cole aqui a URL do Apps Script após implantar
+   Exemplo: https://script.google.com/macros/s/AKfy.../exec    */
+const SHEETS_URL = 'COLE_A_URL_DO_APPS_SCRIPT_AQUI';
+
+/* ══ WPP NUMBER ══
+   Substitua pelo número real com DDI+DDD (sem espaços)
+   Exemplo: 5511987654321                                        */
+const WPP_NUM = 'SEU_NUMERO';
+
+/* ══ CANVAS BG ══ */
 (function(){
-  const c=document.getElementById('bgCanvas');
+  const c=document.getElementById('bg');
   const ctx=c.getContext('2d');
-  let W,H,orbs;
-  function init(){
-    W=c.width=window.innerWidth;
-    H=c.height=window.innerHeight;
-    orbs=[
-      {x:W*.75,y:H*.2,r:350,vx:-.15,vy:.08,col:'rgba(0,61,165,'},
-      {x:W*.1, y:H*.8,r:280,vx:.12,vy:-.06,col:'rgba(0,82,204,'},
-      {x:W*.5, y:H*.5,r:200,vx:.08,vy:.12,col:'rgba(245,197,0,'},
-    ];
-  }
+  let W,H;
+  const orbs=[
+    {x:.72,y:.18,r:380,vx:-.12,vy:.07,col:[0,61,165],.a:.12},
+    {x:.08,y:.82,r:300,vx:.1,vy:-.05,col:[0,82,204],.a:.08},
+    {x:.5,y:.55,r:220,vx:.07,vy:.1,col:[245,197,0],.a:.04},
+  ];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;
+    orbs.forEach(o=>{o.cx=o.x*W;o.cy=o.y*H;});}
   function draw(){
     ctx.clearRect(0,0,W,H);
     orbs.forEach(o=>{
-      const g=ctx.createRadialGradient(o.x,o.y,0,o.x,o.y,o.r);
-      const a=o.col==='rgba(245,197,0,'?.04:.1;
-      g.addColorStop(0,o.col+a+')');
-      g.addColorStop(1,o.col+'0)');
-      ctx.fillStyle=g;ctx.beginPath();
-      ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();
-      o.x+=o.vx;o.y+=o.vy;
-      if(o.x<-o.r||o.x>W+o.r)o.vx*=-1;
-      if(o.y<-o.r||o.y>H+o.r)o.vy*=-1;
+      const g=ctx.createRadialGradient(o.cx,o.cy,0,o.cx,o.cy,o.r);
+      g.addColorStop(0,`rgba(${o.col.join(',')},${o.a})`);
+      g.addColorStop(1,`rgba(${o.col.join(',')},0)`);
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(o.cx,o.cy,o.r,0,Math.PI*2);ctx.fill();
+      o.cx+=o.vx;o.cy+=o.vy;
+      if(o.cx<-o.r||o.cx>W+o.r)o.vx*=-1;
+      if(o.cy<-o.r||o.cy>H+o.r)o.vy*=-1;
     });
     requestAnimationFrame(draw);
   }
-  window.addEventListener('resize',init);
-  init();draw();
+  window.addEventListener('resize',resize);
+  resize();draw();
 })();
 
-/* ── TYPED ANIMATION ── */
-const words=['decisão.','escolha.','simulação.','clique.','parcela.'];
-let wi=0,ci=0,del=false;
-const tw=document.getElementById('typedText');
-function type(){
-  const w=words[wi];
-  if(!del){tw.textContent=w.slice(0,++ci);if(ci===w.length){del=true;setTimeout(type,1800);return;}}
-  else{tw.textContent=w.slice(0,--ci);if(ci===0){del=false;wi=(wi+1)%words.length;}}
-  setTimeout(type,del?55:95);
-}
-type();
+/* ══ STATE ══ */
+const S={name:'',phone:'',product:'',prodLabel:'',prodEmoji:'',
+  rangeLabel:'',creditMid:0,prazo:200,taxa:0,reserva:.005,
+  seguro:.00031,finTax:.105};
+let cur=0;
 
-/* ── STATE ── */
-let state={product:null,rangeKey:null,creditMid:0,prazo:200,taxa:0,name:'',phone:''};
-let currentScreen=0;
-
-/* ── CONFIG ── */
+/* ══ PRODUCT CONFIG ══ */
 const CFG={
-  imovel:{
-    label:'Imóvel',emoji:'🏠',
-    s2title:'Qual faixa de <em>valor do imóvel?</em>',
-    finTax:0.105,
+  imovel:{label:'Imóvel',emoji:'🏠',finTax:.105,prazoBase:200,
+    s4title:'Qual faixa de <em>valor do imóvel?</em>',
     ranges:[
-      {key:'a',label:'R$ 70k – R$ 140k',mid:105000,prazo:200,taxa:.23,reserva:.005,seguro:.00031},
-      {key:'b',label:'R$ 140k – R$ 280k',mid:210000,prazo:200,taxa:.21,reserva:.005,seguro:.00031},
-      {key:'c',label:'R$ 280k – R$ 560k',mid:420000,prazo:200,taxa:.19,reserva:.005,seguro:.00031},
-      {key:'d',label:'R$ 560k – R$ 900k',mid:730000,prazo:200,taxa:.175,reserva:.005,seguro:.00031},
-    ]
-  },
-  carro:{
-    label:'Carro',emoji:'🚗',
-    s2title:'Qual faixa de <em>valor do carro?</em>',
-    finTax:0.18,
+      {lbl:'R$ 70k – R$ 140k',mid:105000,prazo:200,taxa:.23,res:.005,seg:.00031},
+      {lbl:'R$ 140k – R$ 280k',mid:210000,prazo:200,taxa:.21,res:.005,seg:.00031},
+      {lbl:'R$ 280k – R$ 560k',mid:420000,prazo:200,taxa:.19,res:.005,seg:.00031},
+      {lbl:'R$ 560k – R$ 900k',mid:730000,prazo:200,taxa:.175,res:.005,seg:.00031},
+    ]},
+  carro:{label:'Carro',emoji:'🚗',finTax:.18,prazoBase:80,
+    s4title:'Qual faixa de <em>valor do carro?</em>',
     ranges:[
-      {key:'a',label:'R$ 30k – R$ 70k',mid:50000,prazo:80,taxa:.18,reserva:.005,seguro:.00035},
-      {key:'b',label:'R$ 70k – R$ 120k',mid:95000,prazo:80,taxa:.18,reserva:.005,seguro:.00035},
-      {key:'c',label:'R$ 120k – R$ 200k',mid:160000,prazo:80,taxa:.18,reserva:.005,seguro:.00035},
-    ]
-  },
-  moto:{
-    label:'Moto',emoji:'🏍️',
-    s2title:'Qual faixa de <em>valor da moto?</em>',
-    finTax:0.22,
+      {lbl:'R$ 30k – R$ 70k',mid:50000,prazo:80,taxa:.18,res:.005,seg:.00035},
+      {lbl:'R$ 70k – R$ 120k',mid:95000,prazo:80,taxa:.18,res:.005,seg:.00035},
+      {lbl:'R$ 120k – R$ 200k',mid:160000,prazo:80,taxa:.18,res:.005,seg:.00035},
+    ]},
+  moto:{label:'Moto',emoji:'🏍️',finTax:.22,prazoBase:80,
+    s4title:'Qual faixa de <em>valor da moto?</em>',
     ranges:[
-      {key:'a',label:'R$ 10k – R$ 18k',mid:14000,prazo:80,taxa:.18,reserva:.005,seguro:.00035},
-      {key:'b',label:'R$ 18k – R$ 30k',mid:24000,prazo:80,taxa:.18,reserva:.005,seguro:.00035},
-    ]
-  },
-  pesado:{
-    label:'Pesado',emoji:'🚛',
-    s2title:'Qual faixa de <em>valor?</em>',
-    finTax:0.12,
+      {lbl:'R$ 10k – R$ 18k',mid:14000,prazo:80,taxa:.18,res:.005,seg:.00035},
+      {lbl:'R$ 18k – R$ 30k',mid:24000,prazo:80,taxa:.18,res:.005,seg:.00035},
+    ]},
+  pesado:{label:'Caminhão/Pesado',emoji:'🚛',finTax:.12,prazoBase:120,
+    s4title:'Qual faixa de <em>valor?</em>',
     ranges:[
-      {key:'a',label:'R$ 180k – R$ 260k',mid:220000,prazo:120,taxa:.18,reserva:.005,seguro:.00031},
-      {key:'b',label:'R$ 260k – R$ 360k',mid:310000,prazo:120,taxa:.18,reserva:.005,seguro:.00031},
-    ]
-  }
+      {lbl:'R$ 180k – R$ 260k',mid:220000,prazo:120,taxa:.18,res:.005,seg:.00031},
+      {lbl:'R$ 260k – R$ 360k',mid:310000,prazo:120,taxa:.18,res:.005,seg:.00031},
+    ]},
 };
 
-/* ── CALC PARCELA ── */
-function calcParcela(credit,prazo,taxa,reserva,seguro,redutor=.25){
-  const totalCost=credit*(1+taxa+reserva);
-  const bruta=totalCost/prazo;
-  const seg=credit*seguro;
-  const cheia=bruta+seg;
-  return{cheia,reduzida:cheia*(1-redutor)};
-}
-function calcFinanc(credit,prazo,finTax){
-  const jm=finTax/12;
-  return credit*(jm*Math.pow(1+jm,prazo))/(Math.pow(1+jm,prazo)-1);
-}
+/* ══ HELPERS ══ */
 function fmtR(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fmtK(v){
-  if(v>=1000000)return'R$ '+(v/1000000).toFixed(1)+'M';
+  if(v>=1000000)return'R$ '+(v/1000000).toFixed(1).replace('.',',')+'M';
   if(v>=1000)return'R$ '+(v/1000).toFixed(0)+'k';
   return'R$ '+Math.round(v);
 }
-
-/* ── PROGRESS ── */
-function setProgress(pct){document.getElementById('progressFill').style.width=pct+'%';}
-function setCounter(cur,tot){
-  const el=document.getElementById('stepCounter');
-  el.textContent=tot?`${cur} de ${tot}`:'';
+function calcPar(credit,prazo,taxa,res,seg,red=.25){
+  const cheia=credit*(1+taxa+res)/prazo+credit*seg;
+  return{cheia,red:cheia*(1-red)};
+}
+function calcFin(credit,prazo,finTax){
+  const jm=finTax/12;
+  return credit*(jm*Math.pow(1+jm,prazo))/(Math.pow(1+jm,prazo)-1);
 }
 
-/* ── SCREEN NAV ── */
-function goTo(n,dir='up'){
-  const screens=document.querySelectorAll('.screen');
-  const curr=document.querySelector('.screen.active');
-  if(curr){
-    curr.classList.remove('active');
-    curr.classList.add(dir==='up'?'exit-up':'exit-down');
-    setTimeout(()=>curr.classList.remove('exit-up','exit-down'),500);
-  }
+/* ══ SCREENS ══ */
+function go(n,dir='fwd'){
+  const curr=document.getElementById('s'+cur);
+  curr.classList.remove('active');
+  curr.classList.add(dir==='fwd'?'out-left':'out-right');
+  setTimeout(()=>curr.classList.remove('out-left','out-right'),500);
+
   const next=document.getElementById('s'+n);
   next.classList.add('active');
-  currentScreen=n;
-  const pcts=[0,20,40,60,80,100];
-  setProgress(pcts[n]||0);
-  setCounter(n>0&&n<5?n:null,n>0&&n<5?4:null);
+  cur=n;
+
+  // Progress: 0=0, 1=15, 2=30, 3=55, 4=75, 5=100
+  const pcts=[0,15,30,55,75,100];
+  document.getElementById('progFill').style.width=(pcts[n]||0)+'%';
+
+  // Step counter
+  const steps={2:'Passo 1 de 3',3:'Passo 2 de 3',4:'Passo 3 de 3',5:'Resultado'};
+  document.getElementById('stepTxt').textContent=steps[n]||'';
 }
 
-/* ── STEP 1: PRODUCT ── */
-function selectProduct(p,el){
-  state.product=p;
-  const cfg=CFG[p];
-  // Build step 2
-  document.getElementById('s2Title').innerHTML=cfg.s2title;
-  const grid=document.getElementById('rangeGrid');
-  grid.innerHTML=cfg.ranges.map((r,i)=>{
-    const{reduzida}=calcParcela(r.mid,r.prazo,r.taxa,r.reserva,r.seguro);
-    const fullParcela=calcParcela(r.mid,r.prazo,r.taxa,r.reserva,r.seguro).cheia;
-    return`<div class="range-opt" onclick="selectRange('${r.key}',this)" style="transition-delay:${i*.07}s">
-      <div class="ro-credit">Crédito estimado</div>
-      <div class="ro-range">${r.label}</div>
-      <div class="ro-divider"></div>
-      <div class="ro-parcela-lbl">Parcela a partir de</div>
-      <div class="ro-parcela">${fmtR(reduzida)}<span style="font-size:.7rem;color:var(--muted)">/mês</span></div>
-      <div class="ro-parcela-sub">↓ 25% menor até ser contemplado</div>
-    </div>`;
-  }).join('');
-  // animate in
-  setTimeout(()=>{
-    grid.querySelectorAll('.range-opt').forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),i*80));
-  },50);
-  // Animate out hero click
-  el.style.background='rgba(0,61,165,.3)';
-  el.style.borderColor='var(--gold)';
-  setTimeout(()=>goTo(2),320);
+/* ══ STEP 1: NAME ══ */
+function onName(el){
+  document.getElementById('nameBtn').disabled=el.value.trim().length<2;
 }
-
-/* ── STEP 2: RANGE ── */
-function selectRange(key,el){
-  state.rangeKey=key;
-  const cfg=CFG[state.product];
-  const r=cfg.ranges.find(x=>x.key===key);
-  state.creditMid=r.mid;state.prazo=r.prazo;state.taxa=r.taxa;
-  state.reserva=r.reserva;state.seguro=r.seguro;state.finTax=cfg.finTax;
-  // Personalize step 3
-  document.getElementById('s3Title').innerHTML=`Como posso te <em>chamar?</em>`;
-  el.style.borderColor='var(--gold)';el.style.background='rgba(245,197,0,.1)';
-  setTimeout(()=>goTo(3),320);
-}
-
-/* ── STEP 3: NAME ── */
-function onNameInput(el){
-  const ok=el.value.trim().length>=2;
-  document.getElementById('nameBtn').disabled=!ok;
-}
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    if(currentScreen===3)submitName();
-    else if(currentScreen===4)submitPhone();
-  }
-});
-function submitName(){
-  const v=document.getElementById('nameInput').value.trim();
+function doName(){
+  const v=document.getElementById('nameInp').value.trim();
   if(v.length<2)return;
-  state.name=v;
+  S.name=v;
   const first=v.split(' ')[0];
-  document.getElementById('s4Title').innerHTML=`Qual seu <em>WhatsApp,</em> ${first}?`;
-  document.getElementById('s4Sub').textContent='Seu consultor vai entrar em contato em até 2 horas pelo WhatsApp.';
-  goTo(4);
+  document.getElementById('s2Title').innerHTML=`Qual seu <em>WhatsApp,<br>${first}?</em>`;
+  go(2);
 }
 
-/* ── STEP 4: PHONE ── */
-function onPhoneInput(el){
+/* ══ STEP 2: PHONE ══ */
+function onPhone(el){
   let v=el.value.replace(/\D/g,'').substr(0,11);
   if(v.length>6)v='('+v.substr(0,2)+') '+v.substr(2,5)+'-'+v.substr(7);
   else if(v.length>2)v='('+v.substr(0,2)+') '+v.substr(2);
@@ -914,82 +807,152 @@ function onPhoneInput(el){
   el.value=v;
   document.getElementById('phoneBtn').disabled=v.replace(/\D/g,'').length<10;
 }
-function submitPhone(){
-  const v=document.getElementById('phoneInput').value;
+function doPhone(){
+  const v=document.getElementById('phoneInp').value;
   if(v.replace(/\D/g,'').length<10)return;
-  state.phone=v;
-  buildResult();
-  goTo(5);
+  S.phone=v;
+  // ★ SALVA LEAD PARCIAL imediatamente — mesmo que abandone depois
+  saveToSheets({
+    nome:S.name, telefone:S.phone,
+    produto:'', faixa:'', credito:'', parcela:'', prazo:'',
+    status:'Contato coletado'
+  });
+  go(3);
 }
 
-/* ── BUILD RESULT ── */
+/* ══ STEP 3: PRODUCT ══ */
+function doProd(p,el){
+  S.product=p;
+  const cfg=CFG[p];
+  S.prodLabel=cfg.label; S.prodEmoji=cfg.emoji; S.finTax=cfg.finTax;
+  // Build range cards
+  document.getElementById('s4Title').innerHTML=cfg.s4title;
+  const grid=document.getElementById('rangeGrid');
+  grid.innerHTML=cfg.ranges.map((r,i)=>{
+    const{red}=calcPar(r.mid,r.prazo,r.taxa,r.res,r.seg);
+    return`<div class="range-card" onclick="doRange(${i},this)" style="transition-delay:${i*.07}s">
+      <div class="rc-credit-lbl">Crédito estimado</div>
+      <div class="rc-range">${r.lbl}</div>
+      <div class="rc-div"></div>
+      <div class="rc-par-lbl">Parcela a partir de</div>
+      <div class="rc-par">${fmtR(red)}<span class="rc-par-per">/mês</span></div>
+      <div class="rc-par-note">↓ 25% menor até contemplação</div>
+    </div>`;
+  }).join('');
+  setTimeout(()=>grid.querySelectorAll('.range-card').forEach((c,i)=>
+    setTimeout(()=>c.classList.add('in'),i*75)),30);
+  el.style.borderColor='var(--gold)';
+  el.style.background='rgba(0,61,165,.35)';
+  setTimeout(()=>go(4),350);
+}
+
+/* ══ STEP 4: RANGE ══ */
+function doRange(idx,el){
+  const r=CFG[S.product].ranges[idx];
+  S.rangeLabel=r.lbl; S.creditMid=r.mid; S.prazo=r.prazo;
+  S.taxa=r.taxa; S.reserva=r.res; S.seguro=r.seg;
+  el.style.borderColor='var(--gold)';el.style.background='rgba(245,197,0,.1)';
+  setTimeout(()=>{buildResult();go(5);},350);
+}
+
+/* ══ BUILD RESULT ══ */
 function buildResult(){
-  const{creditMid,prazo,taxa,reserva,seguro,finTax,name,phone,product}=state;
-  const cfg=CFG[product];
-  const{cheia,reduzida}=calcParcela(creditMid,prazo,taxa,reserva,seguro);
-  const financ=calcFinanc(creditMid,prazo,finTax);
+  const{creditMid,prazo,taxa,reserva,seguro,finTax,name,phone,prodLabel,prodEmoji,rangeLabel}=S;
+  const{cheia,red}=calcPar(creditMid,prazo,taxa,reserva,seguro);
+  const fin=calcFin(creditMid,prazo,finTax);
   const custoTotal=cheia*prazo;
-  const financTotal=financ*prazo;
-  const ecoMes=financ-reduzida;
-  const ecoTotal=financTotal-custoTotal;
-  const ecoPct=Math.round((ecoMes/financ)*100);
+  const finTotal=fin*prazo;
+  const ecoM=fin-red;
+  const ecoT=finTotal-custoTotal;
+  const ecoPct=Math.round((ecoM/fin)*100);
   const first=name.split(' ')[0];
 
-  document.getElementById('rLabel').textContent=`${first}, sua parcela estimada é de`;
-  document.getElementById('rParcela').textContent=fmtR(reduzida);
-  setTimeout(()=>document.getElementById('rParcela').classList.add('show'),100);
-  document.getElementById('rPeriod').textContent=`por mês · ${cfg.label} · ${prazo}x · com redutor de 25%`;
-  document.getElementById('rCredit').textContent=fmtK(creditMid);
-  document.getElementById('rPrazo').textContent=prazo+'x';
-  document.getElementById('rTaxa').textContent=(taxa*100).toFixed(1)+'%';
-  document.getElementById('rTotal').textContent=fmtK(custoTotal);
-  document.getElementById('cFinanc').textContent=fmtR(financ);
-  document.getElementById('cCons').textContent=fmtR(reduzida);
-  document.getElementById('cEcoMes').textContent=fmtR(ecoMes);
-  document.getElementById('cEcoTotal').textContent=fmtK(ecoTotal);
-  document.getElementById('cEcoPct').textContent=ecoPct+'% menos';
+  document.getElementById('parLabel').textContent=`${first}, sua parcela estimada é`;
+  document.getElementById('parValue').textContent=fmtR(red);
+  document.getElementById('parPeriod').textContent=
+    `por mês · ${prodLabel} · ${prazo}x · com 25% de redutor até contemplação`;
+  document.getElementById('pdCredit').textContent=fmtK(creditMid);
+  document.getElementById('pdPrazo').textContent=prazo+'x';
+  document.getElementById('pdTaxa').textContent=(taxa*100).toFixed(1)+'%';
+  document.getElementById('pdTotal').textContent=fmtK(custoTotal);
+  document.getElementById('cmpF').textContent=fmtR(fin);
+  document.getElementById('cmpC').textContent=fmtR(red);
+  document.getElementById('svM').textContent=fmtR(ecoM);
+  document.getElementById('svT').textContent=fmtK(ecoT);
+  document.getElementById('svP').textContent=ecoPct+'% menos';
 
-  // WPP button
+  setTimeout(()=>document.getElementById('parValue').classList.add('show'),200);
+
+  // WPP link
   const msg=encodeURIComponent(
     `Olá! Sou ${name} e fiz uma simulação no site da Apê 77.\n\n`+
-    `${cfg.emoji} *${cfg.label}*: ${fmtK(creditMid)}\n`+
-    `📅 Prazo: ${prazo}x\n`+
-    `💰 Parcela estimada: ${fmtR(reduzida)}/mês\n`+
-    `📱 Meu WhatsApp: ${phone}\n\n`+
-    `Quero conversar com um consultor!`
+    `${prodEmoji} *${prodLabel}*: ${rangeLabel}\n`+
+    `💰 Parcela estimada: *${fmtR(red)}/mês*\n`+
+    `📱 WhatsApp: ${phone}\n\n`+
+    `Quero falar com um consultor!`
   );
-  // ⚠️ Substitua SEU_NUMERO pelo número real (ex: 5511987654321)
-  document.getElementById('wppResultBtn').href=`https://wa.me/SEU_NUMERO?text=${msg}`;
-  document.getElementById('wppBtnText').textContent=`Falar com consultor agora, ${first}!`;
+  document.getElementById('wppBtn').href=`https://wa.me/${WPP_NUM}?text=${msg}`;
+  document.getElementById('wppTxt').textContent=`Falar com consultor agora, ${first}!`;
+
+  // ★ SALVA LEAD COMPLETO
+  saveToSheets({
+    nome:name, telefone:phone,
+    produto:prodLabel, faixa:rangeLabel,
+    credito:fmtK(creditMid), parcela:fmtR(red),
+    prazo:prazo+'x', status:'Simulação Completa'
+  });
 }
 
-/* ── RESTART ── */
+/* ══ SAVE TO GOOGLE SHEETS ══ */
+function saveToSheets(data){
+  if(!SHEETS_URL||SHEETS_URL.includes('COLE_A_URL')) return; // skip if not configured
+  fetch(SHEETS_URL,{
+    method:'POST',
+    mode:'no-cors', // Google Apps Script precisa de no-cors
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  }).catch(()=>{}); // silencioso — não travar a UX se falhar
+  // Mostra badge de confirmação
+  const badge=document.getElementById('statusBadge');
+  badge.classList.add('show');
+  setTimeout(()=>badge.classList.remove('show'),2500);
+}
+
+/* ══ KEYBOARD ══ */
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  if(cur===1)doName();
+  else if(cur===2)doPhone();
+});
+
+/* ══ RESTART ══ */
 function restart(){
-  state={product:null,rangeKey:null,creditMid:0,prazo:200,taxa:0,name:'',phone:''};
-  document.getElementById('nameInput').value='';
-  document.getElementById('phoneInput').value='';
+  Object.assign(S,{name:'',phone:'',product:'',prodLabel:'',prodEmoji:'',
+    rangeLabel:'',creditMid:0,prazo:200,taxa:0});
+  document.getElementById('nameInp').value='';
+  document.getElementById('phoneInp').value='';
   document.getElementById('nameBtn').disabled=true;
   document.getElementById('phoneBtn').disabled=true;
-  document.getElementById('rParcela').classList.remove('show');
-  goTo(0,'down');
+  document.getElementById('parValue').classList.remove('show');
+  // re-animate prod cards
+  document.querySelectorAll('.prod-card').forEach(c=>{
+    c.style.borderColor='';c.style.background='';
+  });
+  go(0,'back');
 }
 
-/* ── ANIMATE PROD CARDS ON S1 OPEN ── */
-const mutObs=new MutationObserver(muts=>{
+/* ══ ANIMATE PROD CARDS ══ */
+new MutationObserver(muts=>{
   muts.forEach(m=>{
-    if(m.target.id==='s1'&&m.target.classList.contains('active')){
-      const cards=document.querySelectorAll('#s1 .prod-opt');
-      cards.forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*90));
+    if(m.target.id==='s3'&&m.target.classList.contains('active')){
+      document.querySelectorAll('.prod-card').forEach((c,i)=>
+        setTimeout(()=>c.classList.add('in'),i*85));
     }
-    if(m.target.id==='s1'&&!m.target.classList.contains('active')){
-      document.querySelectorAll('#s1 .prod-opt').forEach(c=>c.classList.remove('visible'));
+    if(m.target.id==='s3'&&!m.target.classList.contains('active')){
+      document.querySelectorAll('.prod-card').forEach(c=>c.classList.remove('in'));
     }
   });
-});
-mutObs.observe(document.getElementById('s1'),{attributes:true,attributeFilter:['class']});
-
-// Init hero
-setProgress(0);
+}).observe(document.getElementById('s3'),{attributes:true,attributeFilter:['class']});
 </script>
 </body>
 </html>
