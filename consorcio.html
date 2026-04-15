@@ -2,809 +2,914 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Apê 77 × Porto Seguro — Descubra sua parcela</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porto Seguro Consórcio — Realize seu sonho sem juros</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+/* ══════════════════════════════════════
+   TOKENS
+══════════════════════════════════════ */
 :root{
-  --ink:#04091a;--blue:#003DA5;--blue2:#0a4fd4;
-  --gold:#F5C500;--gold-glow:rgba(245,197,0,.45);
-  --white:#f0ede6;--muted:rgba(240,237,230,.45);
-  --green:#22c55e;--red:#f87171;
+  --blue:      #003DA5;
+  --blue-dark: #002a72;
+  --blue-deep: #001a47;
+  --blue-mid:  #0a4fd4;
+  --blue-lt:   #e8f0fc;
+  --gold:      #F5C500;
+  --gold-lt:   #fff8d6;
+  --white:     #ffffff;
+  --off:       #f4f6fb;
+  --text:      #111827;
+  --text2:     #374151;
+  --text3:     #6b7280;
+  --border:    #e5e9f2;
+  --green:     #16a34a;
+  --green2:    #22c55e;
+  --red:       #dc2626;
+  --shadow-b:  0 4px 24px rgba(0,61,165,.18);
+  --shadow-g:  0 4px 20px rgba(22,163,74,.25);
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html{height:100%;}
-body{height:100%;background:var(--ink);color:var(--white);
-  font-family:'DM Sans',sans-serif;overflow:hidden;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text);
+  font-family:'DM Sans',sans-serif;overflow-x:hidden;}
 
-/* BG */
-#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
-body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:linear-gradient(rgba(0,61,165,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,61,165,.03) 1px,transparent 1px);
-  background-size:52px 52px;}
-
-/* PROGRESS */
-#prog{position:fixed;top:0;left:0;right:0;height:3px;
-  background:rgba(255,255,255,.06);z-index:300;}
-#progFill{height:100%;width:0%;
-  background:linear-gradient(90deg,var(--blue2),var(--gold));
-  transition:width .5s ease;
-  box-shadow:0 0 12px var(--gold-glow);}
-
-/* TOPBAR */
-#top{position:fixed;top:3px;left:0;right:0;height:58px;z-index:299;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;
-  background:linear-gradient(to bottom,rgba(4,9,26,.97) 60%,transparent);}
-.t-brand{display:flex;align-items:center;gap:10px;}
-.t-logo{width:38px;height:38px;border-radius:7px;object-fit:contain;
-  filter:drop-shadow(0 0 10px rgba(245,197,0,.5));}
-.t-name{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;
-  letter-spacing:3px;color:var(--gold);}
-.t-div{width:1px;height:24px;background:rgba(255,255,255,.08);}
-.t-porto{display:flex;align-items:center;gap:6px;}
-.t-porto-txt{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(111,163,255,.75);line-height:1.3;}
-.t-step{font-size:.7rem;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
-
-/* SCREENS */
-.screen{
-  position:fixed;inset:0;
-  display:none;
-  flex-direction:column;align-items:center;justify-content:center;
-  padding:72px 24px 56px;
-  z-index:10;
-  overflow-y:auto;
+/* ══════════════════════════════════════
+   HERO — PORTO AZUL
+══════════════════════════════════════ */
+#hero{
+  background:linear-gradient(160deg, var(--blue-dark) 0%, var(--blue) 55%, var(--blue-mid) 100%);
+  padding:48px 20px 56px;
+  text-align:center;
+  position:relative;overflow:hidden;
 }
-.screen.active{display:flex;}
+/* Geometric background texture */
+#hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(245,197,0,.08) 0%, transparent 40%),
+    radial-gradient(circle at 60% 80%, rgba(255,255,255,.03) 0%, transparent 40%);
+  pointer-events:none;
+}
+/* Diagonal stripe accent */
+#hero::after{
+  content:'';position:absolute;
+  bottom:-2px;left:0;right:0;height:48px;
+  background:var(--white);
+  clip-path:polygon(0 100%, 100% 0, 100% 100%);
+}
 
-/* S0 HERO */
-#s0{text-align:center;}
-.h-badge{display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,61,165,.18);border:1px solid rgba(0,61,165,.4);
-  padding:7px 18px;border-radius:40px;margin-bottom:28px;}
-.h-live{width:7px;height:7px;background:var(--green);border-radius:50%;
-  box-shadow:0 0 8px var(--green);animation:livePulse 1.5s infinite;}
-.h-badge-txt{font-size:.63rem;letter-spacing:2.5px;text-transform:uppercase;color:#6fa3ff;}
-.h-line1{font-family:'Bebas Neue',sans-serif;font-size:clamp(1rem,3vw,1.4rem);
-  letter-spacing:4px;color:rgba(240,237,230,.3);text-transform:uppercase;
-  display:block;margin-bottom:8px;}
-.h-main{font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2.8rem,8vw,7rem);line-height:.88;letter-spacing:2px;
-  display:block;max-width:820px;margin:0 auto;}
-.h-main .accent{color:var(--gold);text-shadow:0 0 50px rgba(245,197,0,.3);}
-.h-main .soft{color:rgba(240,237,230,.18);}
-.h-sub{font-size:clamp(.88rem,2vw,1.05rem);color:var(--muted);
-  max-width:460px;line-height:1.65;margin:20px auto 36px;font-weight:300;}
-.h-sub strong{color:var(--white);font-weight:500;}
+/* PORTO SHIELD */
+.shield-wrap{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;margin-bottom:36px;
+  position:relative;z-index:1;
+}
+.shield-svg{
+  filter:drop-shadow(0 0 24px rgba(255,255,255,.25));
+  animation:shieldGlow 3s ease-in-out infinite;
+}
+@keyframes shieldGlow{
+  0%,100%{filter:drop-shadow(0 0 16px rgba(255,255,255,.2));}
+  50%{filter:drop-shadow(0 0 32px rgba(255,255,255,.4));}
+}
+.shield-text{}
+.shield-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.6rem,5vw,2.4rem);
+  letter-spacing:3px;color:var(--white);
+  line-height:1;
+}
+.shield-sub{
+  font-size:.68rem;letter-spacing:2px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+  margin-top:4px;
+}
+.shield-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:4px;padding:3px 10px;
+  font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.7);margin-top:8px;
+}
+
+/* HEADLINE */
+.hero-tag{
+  display:inline-block;
+  background:var(--gold);color:var(--blue-dark);
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  padding:6px 16px;border-radius:4px;margin-bottom:20px;
+  position:relative;z-index:1;
+  animation:tagPop .5s .2s both;
+}
+@keyframes tagPop{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+.hero-h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2.4rem,7vw,4.8rem);
+  line-height:.92;letter-spacing:2px;
+  color:var(--white);
+  max-width:680px;margin:0 auto 16px;
+  position:relative;z-index:1;
+}
+.hero-h1 .gold{color:var(--gold);}
+
+.hero-sub{
+  font-size:clamp(.9rem,2vw,1.05rem);
+  color:rgba(255,255,255,.72);
+  max-width:480px;margin:0 auto 36px;
+  line-height:1.6;font-weight:300;
+  position:relative;z-index:1;
+}
+.hero-sub strong{color:var(--white);font-weight:600;}
+
+/* HERO PILLS */
+.hero-pills{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:36px;position:relative;z-index:1;
+}
+.hpill{
+  display:flex;flex-direction:column;align-items:center;
+  padding:12px 20px;border-radius:10px;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(8px);
+  min-width:90px;
+}
+.hpill-v{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+  color:var(--gold);line-height:1;}
+.hpill-l{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.55);margin-top:3px;}
 
 /* HERO CTA */
-.h-cta{
-  display:inline-flex;align-items:center;justify-content:center;gap:14px;
-  background:var(--gold);color:var(--ink);
+.hero-cta-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--gold);color:var(--blue-dark);
   font-family:'Syne',sans-serif;font-weight:800;
-  font-size:clamp(.95rem,2.5vw,1.15rem);
-  padding:22px 48px;border-radius:60px;border:none;cursor:pointer;
-  position:relative;overflow:hidden;z-index:20;
-  box-shadow:0 20px 60px rgba(245,197,0,.3);
-  animation:ctaBounce 2.5s 1s infinite;
+  font-size:1.05rem;letter-spacing:.3px;
+  padding:20px 44px;border-radius:50px;border:none;cursor:pointer;
+  box-shadow:0 8px 32px rgba(245,197,0,.4);
+  position:relative;overflow:hidden;z-index:1;
   transition:transform .2s,box-shadow .2s;
-}
-.h-cta:hover{transform:scale(1.05);
-  box-shadow:0 24px 70px rgba(245,197,0,.45);}
-.h-cta:active{transform:scale(.97);}
-.h-cta-shine{position:absolute;inset:0;
-  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.45) 50%,transparent 65%);
-  transform:translateX(-100%);animation:shine 2.2s 1.5s infinite;}
-.h-cta-arrow{width:28px;height:28px;background:rgba(0,0,0,.18);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  transition:transform .2s;}
-.h-cta:hover .h-cta-arrow{transform:translateX(5px);}
-.h-cta-arrow svg{width:14px;height:14px;}
-.h-cta-note{font-size:.67rem;color:rgba(240,237,230,.22);
-  margin-top:14px;letter-spacing:1px;}
-
-@keyframes ctaBounce{
-  0%,100%{box-shadow:0 0 0 0 var(--gold-glow),0 20px 60px rgba(245,197,0,.3);}
-  60%{box-shadow:0 0 0 22px rgba(245,197,0,0),0 20px 60px rgba(245,197,0,.3);}
-}
-@keyframes shine{
-  0%{transform:translateX(-100%);}45%,100%{transform:translateX(220%);}
-}
-
-/* Q-HEADER */
-.qh{text-align:center;margin-bottom:32px;width:100%;max-width:600px;}
-.qh-eye{font-size:.62rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--gold);display:block;margin-bottom:10px;}
-.qh-title{font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(2rem,5.5vw,3.8rem);line-height:.92;letter-spacing:1px;}
-.qh-title em{font-style:normal;color:var(--gold);}
-.qh-sub{font-size:.82rem;color:var(--muted);margin-top:10px;line-height:1.6;}
-
-/* BIG INPUT */
-.inp-wrap{width:100%;max-width:480px;}
-.big-inp{
-  width:100%;background:rgba(6,15,40,.7);
-  border:2px solid rgba(0,61,165,.35);color:var(--white);
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:2px;
-  padding:22px 26px;border-radius:16px;outline:none;
-  caret-color:var(--gold);transition:border-color .3s,box-shadow .3s;
-}
-.big-inp::placeholder{color:rgba(240,237,230,.15);}
-.big-inp:focus{border-color:var(--gold);
-  box-shadow:0 0 0 4px rgba(245,197,0,.1),0 20px 60px rgba(0,0,0,.4);}
-.inp-hint{font-size:.7rem;color:var(--muted);margin-top:10px;
-  text-align:center;letter-spacing:1px;}
-.inp-btn{
-  width:100%;margin-top:18px;
-  background:var(--gold);color:var(--ink);
-  font-family:'Syne',sans-serif;font-weight:800;
-  font-size:1rem;padding:19px;border-radius:12px;
-  border:none;cursor:pointer;transition:all .25s;
-  position:relative;overflow:hidden;
-  box-shadow:0 8px 32px rgba(245,197,0,.25);
-}
-.inp-btn::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
-  transform:translateX(-100%);transition:transform .5s;}
-.inp-btn:hover::after{transform:translateX(100%);}
-.inp-btn:hover:not(:disabled){transform:translateY(-2px);
-  box-shadow:0 14px 40px rgba(245,197,0,.4);}
-.inp-btn:disabled{opacity:.35;cursor:not-allowed;}
-
-/* PRODUCT CARDS */
-.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px;
-  width:100%;max-width:580px;}
-.prod-card{
-  background:rgba(6,15,40,.65);
-  border:1.5px solid rgba(0,61,165,.22);
-  border-radius:18px;padding:24px 18px;cursor:pointer;
-  position:relative;overflow:hidden;
-  transition:all .3s cubic-bezier(.175,.885,.32,1.275);
-  opacity:0;transform:translateY(18px);
-}
-.prod-card.in{opacity:1;transform:translateY(0);}
-.prod-card:hover{border-color:var(--gold);transform:translateY(-4px) scale(1.02);
-  box-shadow:0 18px 50px rgba(0,0,0,.4),0 0 28px rgba(245,197,0,.12);}
-.prod-card:active{transform:scale(.96);}
-.pc-icon{font-size:2.2rem;display:block;margin-bottom:10px;}
-.pc-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:1px;margin-bottom:4px;}
-.pc-sub{font-size:.7rem;color:var(--muted);line-height:1.4;}
-.pc-range{font-size:.65rem;color:#6fa3ff;margin-top:8px;}
-
-/* RANGE CARDS */
-.range-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;
-  width:100%;max-width:580px;}
-.range-card{
-  background:rgba(6,15,40,.65);
-  border:1.5px solid rgba(0,61,165,.22);
-  border-radius:16px;padding:18px 16px;cursor:pointer;
-  transition:all .3s cubic-bezier(.175,.885,.32,1.275);
-  opacity:0;transform:translateY(16px);text-align:left;
-}
-.range-card.in{opacity:1;transform:translateY(0);}
-.range-card:hover{border-color:var(--gold);transform:translateY(-3px);
-  box-shadow:0 14px 44px rgba(0,0,0,.4),0 0 22px rgba(245,197,0,.1);}
-.range-card:active{transform:scale(.97);}
-.rc-credit-lbl{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:5px;}
-.rc-range{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;
-  color:var(--white);letter-spacing:.5px;line-height:1;margin-bottom:12px;}
-.rc-div{height:1px;background:rgba(255,255,255,.07);margin-bottom:12px;}
-.rc-par-lbl{font-size:.58rem;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(255,255,255,.5);margin-bottom:4px;}
-.rc-par{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;
-  color:var(--gold);line-height:1;text-shadow:0 0 24px rgba(245,197,0,.35);}
-.rc-par-per{font-size:.65rem;color:rgba(245,197,0,.6);margin-left:3px;}
-.rc-par-note{font-size:.6rem;color:rgba(34,197,94,.65);margin-top:4px;}
-
-/* RESULT */
-#s5{padding:64px 18px 80px;overflow-y:auto;justify-content:flex-start;padding-top:72px;}
-.res-wrap{width:100%;max-width:580px;margin:0 auto;
-  display:flex;flex-direction:column;gap:14px;}
-.porto-block{
-  background:linear-gradient(135deg,#002d7a 0%,#001a4d 100%);
-  border-radius:20px;padding:22px 20px;
-  position:relative;overflow:hidden;
-  display:flex;align-items:center;gap:16px;
-  border:1px solid rgba(255,255,255,.08);}
-.porto-block::after{content:'';position:absolute;top:-80px;right:-80px;
-  width:200px;height:200px;
-  background:radial-gradient(circle,rgba(255,255,255,.06),transparent);
-  border-radius:50%;}
-.porto-shield{flex-shrink:0;position:relative;z-index:1;}
-.porto-txt{position:relative;z-index:1;}
-.porto-eyebrow{font-size:.56rem;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(255,255,255,.4);margin-bottom:4px;}
-.porto-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;
-  letter-spacing:2px;color:#fff;line-height:1;}
-.porto-cnpj{font-size:.6rem;color:rgba(255,255,255,.4);margin-top:3px;line-height:1.4;}
-.porto-badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-.pb{background:rgba(255,255,255,.1);border-radius:4px;padding:3px 10px;
-  font-size:.56rem;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);}
-.parcela-card{
-  background:rgba(6,15,40,.85);border:1px solid rgba(0,61,165,.4);
-  border-radius:20px;padding:26px 22px;text-align:center;
-  position:relative;overflow:hidden;}
-.parcela-card::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 110%,rgba(245,197,0,.07),transparent 60%);}
-.par-name-lbl{font-size:.6rem;letter-spacing:2px;text-transform:uppercase;
-  color:#6fa3ff;margin-bottom:8px;position:relative;}
-.par-value{font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(3.2rem,11vw,5.2rem);
-  color:var(--gold);line-height:1;
-  text-shadow:0 0 60px rgba(245,197,0,.45);
-  position:relative;}
-.par-period{font-size:.72rem;color:var(--muted);margin-top:4px;position:relative;}
-.par-details{display:flex;justify-content:center;gap:18px;
-  margin-top:16px;padding-top:14px;
-  border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;position:relative;}
-.pd-item{text-align:center;}
-.pd-val{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;
-  color:var(--white);line-height:1;}
-.pd-lbl{font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(240,237,230,.35);margin-top:3px;}
-.cmp-card{background:rgba(6,15,40,.7);border:1px solid rgba(0,61,165,.2);
-  border-radius:18px;padding:20px 16px;}
-.cmp-title{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
-  color:var(--muted);text-align:center;
-  display:flex;align-items:center;gap:8px;margin-bottom:16px;}
-.cmp-title::before,.cmp-title::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);}
-.cmp-cols{display:grid;grid-template-columns:1fr 40px 1fr;gap:10px;
-  align-items:center;margin-bottom:14px;}
-.cmp-col{text-align:center;}
-.cmp-tag{font-size:.56rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;}
-.cmp-tag.r{color:rgba(248,113,113,.7);}
-.cmp-tag.g{color:rgba(245,197,0,.9);}
-.cmp-box{border-radius:10px;padding:14px 10px;}
-.cmp-box.rb{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.18);}
-.cmp-box.gb{background:rgba(245,197,0,.09);border:1px solid rgba(245,197,0,.28);}
-.cmp-val{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;line-height:1;}
-.cmp-val.r{color:var(--red);}
-.cmp-val.g{color:var(--gold);}
-.cmp-sub{font-size:.58rem;color:var(--muted);margin-top:3px;}
-.cmp-vs{width:34px;height:34px;border-radius:50%;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
-  display:flex;align-items:center;justify-content:center;
-  font-size:.62rem;color:var(--muted);margin:0 auto;}
-.cmp-savings{background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(34,197,94,.03));
-  border:1px solid rgba(34,197,94,.18);border-radius:10px;
-  padding:14px;display:flex;justify-content:space-around;
-  align-items:center;flex-wrap:wrap;gap:8px;}
-.sv-item{text-align:center;}
-.sv-lbl{font-size:.55rem;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(34,197,94,.6);}
-.sv-val{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;
-  color:#22c55e;line-height:1.1;margin-top:2px;}
-.wpp-btn{
-  width:100%;display:flex;align-items:center;justify-content:center;gap:12px;
-  background:#25D366;color:#fff;
-  font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;
-  padding:20px;border-radius:14px;border:none;cursor:pointer;
+  animation:ctaPulse 2.5s 1s infinite;
   text-decoration:none;
-  box-shadow:0 8px 36px rgba(37,211,102,.3);
+}
+.hero-cta-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);
+  transform:translateX(-100%);animation:shine 2s 1.5s infinite;
+}
+.hero-cta-btn:hover{transform:translateY(-3px) scale(1.02);
+  box-shadow:0 14px 44px rgba(245,197,0,.55);}
+.hero-cta-btn:active{transform:scale(.97);}
+.cta-arrow{width:26px;height:26px;background:rgba(0,0,0,.15);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cta-arrow svg{width:13px;height:13px;}
+@keyframes ctaPulse{
+  0%,100%{box-shadow:0 8px 32px rgba(245,197,0,.4);}
+  50%{box-shadow:0 8px 32px rgba(245,197,0,.4),0 0 0 12px rgba(245,197,0,0);}
+}
+@keyframes shine{0%{transform:translateX(-100%);}50%,100%{transform:translateX(220%);}}
+.hero-cta-note{
+  font-size:.68rem;color:rgba(255,255,255,.35);
+  margin-top:12px;letter-spacing:1px;
+  position:relative;z-index:1;
+}
+
+/* ══════════════════════════════════════
+   COMPARATIVO
+══════════════════════════════════════ */
+#comparativo{
+  background:var(--off);
+  padding:48px 20px;
+  text-align:center;
+}
+.cmp-label{
+  font-size:.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px;font-weight:600;
+}
+.cmp-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  letter-spacing:1px;color:var(--text);margin-bottom:32px;
+}
+.cmp-title span{color:var(--blue);}
+.cmp-wrap{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;flex-wrap:wrap;max-width:680px;margin:0 auto 20px;
+}
+.cmp-box{
+  flex:1;min-width:220px;border-radius:14px;padding:24px 20px;
+  text-align:center;position:relative;
+}
+.cmp-box.bad{
+  background:#fff5f5;border:2px solid #fecaca;
+}
+.cmp-box.good{
+  background:var(--blue-lt);border:2px solid rgba(0,61,165,.25);
+  box-shadow:var(--shadow-b);
+}
+.cmp-box-tag{
+  font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
+  font-weight:700;margin-bottom:10px;
+}
+.cmp-box-tag.red{color:var(--red);}
+.cmp-box-tag.blue{color:var(--blue);}
+.cmp-box-produto{
+  font-size:.75rem;color:var(--text3);margin-bottom:6px;
+}
+.cmp-box-val{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(2rem,5vw,2.8rem);line-height:1;
+}
+.cmp-box-val.red{color:var(--red);}
+.cmp-box-val.blue{color:var(--blue);}
+.cmp-box-sub{font-size:.72rem;margin-top:5px;}
+.cmp-box-sub.red{color:var(--red);}
+.cmp-box-sub.blue{color:var(--blue);}
+.cmp-box-note{
+  font-size:.65rem;color:var(--text3);margin-top:8px;line-height:1.4;
+}
+.cmp-vs{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--white);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.9rem;
+  color:var(--text3);flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.cmp-saving{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#dcfce7,#bbf7d0);
+  border:1px solid #86efac;border-radius:8px;
+  padding:10px 20px;font-family:'Syne',sans-serif;
+  font-weight:700;font-size:.88rem;color:var(--green);
+  margin-top:4px;
+}
+.cmp-saving svg{width:16px;height:16px;stroke:var(--green);}
+.cmp-disclaimer{font-size:.62rem;color:var(--text3);margin-top:10px;}
+
+/* ══════════════════════════════════════
+   PRODUTOS
+══════════════════════════════════════ */
+#produtos{padding:48px 20px;background:var(--white);}
+.sec-label{font-size:.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blue);margin-bottom:10px;font-weight:600;text-align:center;}
+.sec-title{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:1px;
+  color:var(--text);text-align:center;margin-bottom:8px;}
+.sec-title span{color:var(--blue);}
+.sec-sub{font-size:.88rem;color:var(--text3);text-align:center;
+  margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;}
+.prod-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;max-width:640px;margin:0 auto;
+}
+.prod-card{
+  background:var(--off);border:1.5px solid var(--border);
+  border-radius:14px;padding:22px 18px;
+  cursor:pointer;transition:all .25s;
   position:relative;overflow:hidden;
-  animation:wppPulse 2.5s 1.5s infinite;
-  transition:transform .2s;}
-.wpp-btn::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);
+}
+.prod-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--blue-mid));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.prod-card:hover{border-color:var(--blue);background:var(--blue-lt);
+  transform:translateY(-3px);box-shadow:var(--shadow-b);}
+.prod-card:hover::before{transform:scaleX(1);}
+.prod-card:active{transform:scale(.97);}
+.pc-icon{font-size:1.8rem;margin-bottom:8px;display:block;}
+.pc-title{font-family:'Syne',sans-serif;font-weight:800;
+  font-size:.95rem;color:var(--text);margin-bottom:4px;}
+.pc-sub{font-size:.7rem;color:var(--text3);line-height:1.4;margin-bottom:10px;}
+.pc-parcela-lbl{font-size:.58rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--text3);}
+.pc-parcela{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;
+  color:var(--blue);line-height:1;margin-top:2px;}
+.pc-parcela-sub{font-size:.6rem;color:var(--green);margin-top:2px;font-weight:600;}
+
+/* ══════════════════════════════════════
+   FORMULÁRIO
+══════════════════════════════════════ */
+#formulario{
+  background:linear-gradient(180deg,var(--off) 0%,var(--white) 100%);
+  padding:56px 20px 72px;
+}
+.form-wrap{max-width:540px;margin:0 auto;}
+.form-header{text-align:center;margin-bottom:32px;}
+.form-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--blue-lt);border:1px solid rgba(0,61,165,.2);
+  border-radius:4px;padding:5px 14px;margin-bottom:14px;
+}
+.form-badge-dot{width:6px;height:6px;background:var(--green2);
+  border-radius:50%;animation:livePulse 1.5s infinite;}
+.form-badge-txt{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--blue);font-weight:600;}
+.form-title{font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(1.8rem,5vw,2.6rem);letter-spacing:1px;
+  color:var(--text);line-height:.95;margin-bottom:8px;}
+.form-title span{color:var(--blue);}
+.form-sub{font-size:.88rem;color:var(--text3);line-height:1.55;}
+
+/* CARD FORM */
+.form-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:20px;padding:32px 28px;
+  box-shadow:0 8px 40px rgba(0,61,165,.08);
+}
+.f-field{margin-bottom:18px;}
+.f-label{display:block;font-size:.72rem;font-weight:600;
+  letter-spacing:.5px;color:var(--text2);margin-bottom:7px;}
+.f-label .req{color:var(--red);}
+.f-input{
+  width:100%;background:var(--off);border:1.5px solid var(--border);
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;
+  padding:14px 16px;border-radius:10px;outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;
+}
+.f-input:focus{border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(0,61,165,.1);}
+.f-input::placeholder{color:#aab4c8;}
+/* RADIO FAIXAS */
+.faixas{display:flex;flex-direction:column;gap:8px;}
+.faixa-opt{
+  display:flex;align-items:center;gap:12px;
+  background:var(--off);border:1.5px solid var(--border);
+  border-radius:10px;padding:13px 16px;cursor:pointer;
+  transition:all .2s;
+}
+.faixa-opt:hover{border-color:var(--blue);background:var(--blue-lt);}
+.faixa-opt.selected{border-color:var(--blue);background:var(--blue-lt);
+  box-shadow:0 0 0 3px rgba(0,61,165,.08);}
+.faixa-radio{width:18px;height:18px;border-radius:50%;
+  border:2px solid #c4cdd6;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;}
+.faixa-opt.selected .faixa-radio{border-color:var(--blue);}
+.faixa-radio-dot{width:8px;height:8px;border-radius:50%;
+  background:var(--blue);opacity:0;transition:opacity .2s;}
+.faixa-opt.selected .faixa-radio-dot{opacity:1;}
+.faixa-label{font-size:.88rem;color:var(--text);font-weight:500;flex:1;}
+.faixa-par{font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.78rem;color:var(--blue);white-space:nowrap;}
+/* SELECT PRODUTO */
+.prod-select{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.prod-sel-opt{
+  display:flex;align-items:center;gap:8px;
+  background:var(--off);border:1.5px solid var(--border);
+  border-radius:10px;padding:11px 14px;cursor:pointer;
+  transition:all .2s;
+}
+.prod-sel-opt:hover{border-color:var(--blue);background:var(--blue-lt);}
+.prod-sel-opt.selected{border-color:var(--blue);background:var(--blue-lt);
+  box-shadow:0 0 0 3px rgba(0,61,165,.08);}
+.prod-sel-icon{font-size:1.3rem;flex-shrink:0;}
+.prod-sel-name{font-size:.82rem;font-weight:600;color:var(--text);}
+
+/* SUBMIT */
+.f-submit{
+  width:100%;margin-top:6px;
+  background:var(--green);color:var(--white);
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:1rem;letter-spacing:.3px;
+  padding:18px;border-radius:12px;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  box-shadow:var(--shadow-g);
+  position:relative;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+  animation:submitPulse 2.5s 2s infinite;
+}
+.f-submit::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.25) 50%,transparent 65%);
   transform:translateX(-100%);transition:transform .5s;}
-.wpp-btn:hover::after{transform:translateX(100%);}
-.wpp-btn:hover{transform:translateY(-2px);}
-.wpp-btn svg{width:22px;height:22px;fill:#fff;flex-shrink:0;}
-.res-note{font-size:.58rem;color:rgba(240,237,230,.18);text-align:center;line-height:1.6;}
-.res-restart{display:block;text-align:center;background:none;border:none;
-  color:rgba(240,237,230,.2);font-size:.7rem;cursor:pointer;
-  font-family:'DM Sans',sans-serif;letter-spacing:1px;padding:8px;
-  transition:color .2s;}
-.res-restart:hover{color:var(--muted);}
+.f-submit:hover::before{transform:translateX(200%);}
+.f-submit:hover{transform:translateY(-2px);
+  box-shadow:0 10px 36px rgba(22,163,74,.4);}
+.f-submit:active{transform:scale(.97);}
+.f-submit:disabled{opacity:.45;cursor:not-allowed;animation:none;}
+.f-submit svg{width:20px;height:20px;fill:white;flex-shrink:0;}
+@keyframes submitPulse{
+  0%,100%{box-shadow:var(--shadow-g);}
+  50%{box-shadow:0 0 0 0 rgba(22,163,74,.5),0 10px 36px rgba(22,163,74,.3);}
+}
+
+/* O QUE ACONTECE DEPOIS */
+.after-submit{margin-top:20px;}
+.after-title{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--text3);text-align:center;margin-bottom:14px;}
+.after-steps{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.after-step{
+  display:flex;align-items:center;gap:8px;
+  background:var(--off);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;flex:1;min-width:140px;
+}
+.after-step-num{width:22px;height:22px;border-radius:50%;
+  background:var(--blue);color:white;font-family:'Syne',sans-serif;
+  font-weight:800;font-size:.68rem;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;}
+.after-step-txt{font-size:.72rem;color:var(--text2);line-height:1.4;}
+.f-disclaimer{font-size:.65rem;color:var(--text3);text-align:center;
+  margin-top:14px;line-height:1.5;}
+
+/* SUCCESS */
+.form-success{display:none;text-align:center;padding:32px 20px;}
+.form-success.show{display:block;}
+.success-icon{font-size:3rem;margin-bottom:14px;}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;
+  color:var(--blue);letter-spacing:1px;margin-bottom:8px;}
+.success-text{font-size:.9rem;color:var(--text2);line-height:1.6;}
+.success-text strong{color:var(--blue);}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{
+  background:var(--blue-deep);padding:28px 20px;text-align:center;
+}
+.foot-logo{display:flex;align-items:center;justify-content:center;
+  gap:10px;margin-bottom:10px;}
+.foot-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;
+  letter-spacing:3px;color:white;}
+.foot-txt{font-size:.65rem;color:rgba(255,255,255,.3);line-height:1.7;}
+
+/* ══════════════════════════════════════
+   WPP FLOAT
+══════════════════════════════════════ */
+#wf{position:fixed;bottom:20px;right:18px;z-index:500;}
+.wf-btn{
+  display:flex;align-items:center;gap:8px;
+  background:#25D366;color:white;
+  font-family:'Syne',sans-serif;font-weight:700;
+  font-size:.76rem;padding:12px 18px;border-radius:40px;
+  text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.45);
+  animation:wppPulse 3s 2s infinite;
+}
+.wf-btn svg{width:16px;height:16px;fill:white;}
 
 /* STATUS */
-.status-badge{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
-  background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);
-  border-radius:30px;padding:8px 20px;font-size:.7rem;letter-spacing:1.5px;
-  text-transform:uppercase;color:#22c55e;z-index:400;
-  opacity:0;transition:opacity .4s;pointer-events:none;white-space:nowrap;}
-.status-badge.show{opacity:1;}
+#statusBadge{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+  background:#dcfce7;border:1px solid #86efac;border-radius:30px;
+  padding:8px 20px;font-size:.72rem;letter-spacing:1px;
+  color:var(--green);z-index:600;opacity:0;transition:opacity .4s;
+  pointer-events:none;white-space:nowrap;font-weight:600;
+}
+#statusBadge.show{opacity:1;}
 
-/* WPP FLOAT */
-#wf{position:fixed;bottom:22px;right:20px;z-index:400;}
-.wf-a{display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;
-  padding:12px 18px;border-radius:40px;text-decoration:none;
-  box-shadow:0 4px 20px rgba(37,211,102,.4);
-  animation:wppPulse 3s 2s infinite;}
-.wf-a svg{width:15px;height:15px;fill:#fff;}
-
-/* KEYFRAMES */
-@keyframes livePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.5);opacity:.4;}}
+/* ══════════════════════════════════════
+   KEYFRAMES & ANIMATIONS
+══════════════════════════════════════ */
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.5);}}
 @keyframes wppPulse{0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.5);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
-/* MOBILE */
+.reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .6s ease,transform .6s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ══════════════════════════════════════
+   MOBILE
+══════════════════════════════════════ */
 @media(max-width:480px){
-  #top{padding:0 14px;}
-  .t-step{display:none;}
-  .screen{padding:66px 14px 54px;}
-  .prod-grid,.range-grid{grid-template-columns:1fr 1fr;gap:9px;}
-  .prod-card{padding:18px 12px;}
+  .cmp-wrap{flex-direction:column;align-items:stretch;}
+  .cmp-vs{margin:0 auto;}
+  .prod-grid{grid-template-columns:1fr 1fr;}
+  .prod-select{grid-template-columns:1fr 1fr;}
+  .form-card{padding:24px 18px;}
+  .after-steps{flex-direction:column;}
+  .hero-pills{gap:7px;}
+  .hpill{padding:10px 14px;min-width:78px;}
 }
 </style>
 </head>
 <body>
 
-<canvas id="bg"></canvas>
-
-<div id="prog"><div id="progFill"></div></div>
-
-<div id="top">
-  <div class="t-brand">
-    <img src="/mnt/user-data/uploads/WhatsApp_Image_2026-04-13_at_23_44_32.jpeg" alt="Apê 77" class="t-logo">
-    <div class="t-name">Apê 77</div>
-    <div class="t-div"></div>
-    <div class="t-porto">
-      <svg width="13" height="15" viewBox="0 0 40 44" fill="none">
-        <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(111,163,255,.25)"/>
-        <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(111,163,255,.55)"/>
-        <text x="20" y="27" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="13">P</text>
-      </svg>
-      <div class="t-porto-txt">Porto Seguro<br>Consórcio</div>
-    </div>
-  </div>
-  <div class="t-step" id="stepTxt"></div>
-</div>
-
-<div class="status-badge" id="statusBadge">✓ Dados salvos com segurança</div>
-
+<!-- WPP FLOAT -->
 <div id="wf">
-  <a href="https://wa.me/SEU_NUMERO" class="wf-a" target="_blank">
+  <a href="https://wa.me/SEU_NUMERO" class="wf-btn" target="_blank">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Falar agora
   </a>
 </div>
 
-<!-- S0 HERO -->
-<div class="screen active" id="s0">
-  <div class="h-badge">
-    <div class="h-live"></div>
-    <span class="h-badge-txt">Parceiro Oficial Porto Seguro · Atendimento em até 2h</span>
+<div id="statusBadge">✓ Lead salvo com sucesso</div>
+
+<!-- ═══════════════════════
+     HERO
+═══════════════════════ -->
+<section id="hero">
+  <!-- Porto Seguro Shield + Nome -->
+  <div class="shield-wrap">
+    <svg class="shield-svg" width="64" height="72" viewBox="0 0 40 44" fill="none">
+      <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(255,255,255,0.15)"/>
+      <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(255,255,255,0.35)"/>
+      <path d="M20 6L8 10.5V22c0 7.2 5 13.5 12 15.2 7-1.7 12-8 12-15.2V10.5L20 6z" fill="rgba(255,255,255,0.15)"/>
+      <text x="20" y="28" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="14">P</text>
+    </svg>
+    <div class="shield-text">
+      <div class="shield-name">Porto Seguro</div>
+      <div class="shield-sub">Consórcio · Parceiro Autorizado</div>
+      <div class="shield-badge">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Imóveis · Carros · Motos · Pesados
+      </div>
+    </div>
   </div>
-  <span class="h-line1">Consórcio sem juros · sem entrada</span>
-  <span class="h-main">
-    Você está<br>pagando <span class="accent">caro</span><br><span class="soft">demais.</span>
-  </span>
-  <p class="h-sub">
-    Descubra em <strong>30 segundos</strong> qual seria sua parcela
-    sem pagar nada de juros — e quanto você perde no financiamento bancário.
+
+  <div class="hero-tag">Consórcio — A compra inteligente</div>
+
+  <h1 class="hero-h1">
+    Realize seu sonho<br>
+    <span class="gold">sem pagar juros.</span><br>
+    Sem entrada.
+  </h1>
+
+  <p class="hero-sub">
+    Com o consórcio Porto Seguro você compra
+    <strong>imóvel, carro, moto ou caminhão</strong>
+    pagando até 60% menos por mês do que no financiamento.
   </p>
-  <button class="h-cta" id="heroCta">
-    <span class="h-cta-shine"></span>
-    <span>Quero descobrir minha parcela</span>
-    <div class="h-cta-arrow">
+
+  <div class="hero-pills">
+    <div class="hpill"><div class="hpill-v">0%</div><div class="hpill-l">Juros</div></div>
+    <div class="hpill"><div class="hpill-v">R$ 0</div><div class="hpill-l">Entrada</div></div>
+    <div class="hpill"><div class="hpill-v">R$ 612</div><div class="hpill-l">A partir de/mês</div></div>
+    <div class="hpill"><div class="hpill-v">200x</div><div class="hpill-l">Parcelas</div></div>
+  </div>
+
+  <a href="#formulario" class="hero-cta-btn">
+    <span>Quero minha simulação grátis</span>
+    <div class="cta-arrow">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
         <path d="M5 12h14M12 5l7 7-7 7"/>
       </svg>
     </div>
-  </button>
-  <div class="h-cta-note">Gratuito · Sem compromisso · 30 segundos</div>
-</div>
+  </a>
+  <div class="hero-cta-note">Gratuito · Sem compromisso · Resposta em até 2h</div>
+</section>
 
-<!-- S1 NOME -->
-<div class="screen" id="s1">
-  <div class="qh">
-    <span class="qh-eye">Antes de tudo</span>
-    <div class="qh-title">Como posso te <em>chamar?</em></div>
-    <p class="qh-sub">Só seu primeiro nome já está ótimo.</p>
+<!-- ═══════════════════════
+     COMPARATIVO
+═══════════════════════ -->
+<section id="comparativo">
+  <p class="cmp-label">Por que consórcio?</p>
+  <h2 class="cmp-title">Consórcio <span>vs</span> Financiamento</h2>
+  <div class="cmp-wrap reveal">
+    <div class="cmp-box bad">
+      <div class="cmp-box-tag red">🏦 Financiamento bancário</div>
+      <div class="cmp-box-produto">Imóvel de R$ 300.000</div>
+      <div class="cmp-box-val red">R$ 2.847</div>
+      <div class="cmp-box-sub red">/mês com juros de 10,5% a.a.</div>
+      <div class="cmp-box-note">Você paga R$ 343.000 só de juros<br>ao longo do contrato</div>
+    </div>
+    <div class="cmp-vs">VS</div>
+    <div class="cmp-box good">
+      <div class="cmp-box-tag blue">⚡ Consórcio Porto Seguro</div>
+      <div class="cmp-box-produto">Mesmo imóvel de R$ 300.000</div>
+      <div class="cmp-box-val blue">R$ 1.193</div>
+      <div class="cmp-box-sub blue">/mês sem nenhum juro</div>
+      <div class="cmp-box-note">Você paga apenas a taxa de<br>administração — muito menor</div>
+    </div>
   </div>
-  <div class="inp-wrap">
-    <input type="text" class="big-inp" id="nameInp"
-      placeholder="Seu nome..." autocomplete="given-name"
-      oninput="onName(this)">
-    <div class="inp-hint">Pressione Enter para avançar</div>
-    <button class="inp-btn" id="nameBtn" onclick="doName()" disabled>Continuar →</button>
+  <div class="cmp-saving reveal">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    Economia de R$ 1.654 por mês · R$ 397.000 no prazo total
   </div>
-</div>
+  <p class="cmp-disclaimer reveal">*Simulação para imóvel de R$ 300k · 200 meses · taxa adm. 19% · com redutor de 25%</p>
+</section>
 
-<!-- S2 TELEFONE -->
-<div class="screen" id="s2">
-  <div class="qh">
-    <span class="qh-eye">Passo 1 de 3</span>
-    <div class="qh-title" id="s2Title">Qual seu <em>WhatsApp?</em></div>
-    <p class="qh-sub">Seu consultor entra em contato em até 2 horas.</p>
-  </div>
-  <div class="inp-wrap">
-    <input type="tel" class="big-inp" id="phoneInp"
-      placeholder="(XX) XXXXX-XXXX" autocomplete="tel"
-      oninput="onPhone(this)">
-    <div class="inp-hint">Apenas WhatsApp ativo</div>
-    <button class="inp-btn" id="phoneBtn" onclick="doPhone()" disabled>Continuar →</button>
-  </div>
-</div>
-
-<!-- S3 PRODUTO -->
-<div class="screen" id="s3">
-  <div class="qh">
-    <span class="qh-eye">Passo 2 de 3</span>
-    <div class="qh-title">Qual é o seu <em>sonho?</em></div>
-    <p class="qh-sub">Toque para escolher e avançar automaticamente.</p>
-  </div>
+<!-- ═══════════════════════
+     PRODUTOS
+═══════════════════════ -->
+<section id="produtos">
+  <p class="sec-label">Linha completa</p>
+  <h2 class="sec-title">Um consórcio para <span>cada sonho</span></h2>
+  <p class="sec-sub">Sem juros, sem entrada, parcelas que cabem no seu orçamento.</p>
   <div class="prod-grid">
-    <div class="prod-card" onclick="doProd('imovel',this)">
+    <div class="prod-card reveal" onclick="selectProduto('Imóvel',this)">
       <span class="pc-icon">🏠</span>
       <div class="pc-title">Imóvel</div>
-      <div class="pc-sub">Casa, apto, terreno ou reforma</div>
-      <div class="pc-range">R$ 70k a R$ 900k · 200 meses</div>
+      <div class="pc-sub">Casa, apto, terreno, construção ou reforma</div>
+      <div class="pc-parcela-lbl">A partir de</div>
+      <div class="pc-parcela">R$ 612/mês</div>
+      <div class="pc-parcela-sub">↓ 25% menor até contemplação</div>
     </div>
-    <div class="prod-card" onclick="doProd('carro',this)">
+    <div class="prod-card reveal" onclick="selectProduto('Carro',this)">
       <span class="pc-icon">🚗</span>
       <div class="pc-title">Carro</div>
       <div class="pc-sub">Novo ou seminovo até 8 anos</div>
-      <div class="pc-range">R$ 30k a R$ 200k · 80 meses</div>
+      <div class="pc-parcela-lbl">A partir de</div>
+      <div class="pc-parcela">R$ 542/mês</div>
+      <div class="pc-parcela-sub">↓ 25% menor até contemplação</div>
     </div>
-    <div class="prod-card" onclick="doProd('moto',this)">
+    <div class="prod-card reveal" onclick="selectProduto('Moto',this)">
       <span class="pc-icon">🏍️</span>
       <div class="pc-title">Moto</div>
       <div class="pc-sub">Nova ou seminova</div>
-      <div class="pc-range">R$ 10k a R$ 30k · 80 meses</div>
+      <div class="pc-parcela-lbl">A partir de</div>
+      <div class="pc-parcela">R$ 178/mês</div>
+      <div class="pc-parcela-sub">↓ 25% menor até contemplação</div>
     </div>
-    <div class="prod-card" onclick="doProd('pesado',this)">
+    <div class="prod-card reveal" onclick="selectProduto('Caminhão/Pesado',this)">
       <span class="pc-icon">🚛</span>
       <div class="pc-title">Caminhão</div>
       <div class="pc-sub">Pesados, ônibus e tratores</div>
-      <div class="pc-range">R$ 180k a R$ 360k · 120 meses</div>
+      <div class="pc-parcela-lbl">A partir de</div>
+      <div class="pc-parcela">R$ 1.940/mês</div>
+      <div class="pc-parcela-sub">↓ 25% menor até contemplação</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- S4 FAIXA -->
-<div class="screen" id="s4">
-  <div class="qh">
-    <span class="qh-eye">Passo 3 de 3</span>
-    <div class="qh-title" id="s4Title">Qual faixa de <em>valor?</em></div>
-    <p class="qh-sub">Escolha pela parcela que cabe no seu bolso.</p>
-  </div>
-  <div class="range-grid" id="rangeGrid"></div>
-</div>
-
-<!-- S5 RESULTADO -->
-<div class="screen" id="s5">
-  <div class="res-wrap">
-    <div class="porto-block">
-      <div class="porto-shield">
-        <svg width="50" height="58" viewBox="0 0 40 44" fill="none">
-          <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(255,255,255,.12)"/>
-          <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(255,255,255,.32)"/>
-          <text x="20" y="28" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="14">P</text>
-        </svg>
+<!-- ═══════════════════════
+     FORMULÁRIO
+═══════════════════════ -->
+<section id="formulario">
+  <div class="form-wrap">
+    <div class="form-header">
+      <div class="form-badge">
+        <div class="form-badge-dot"></div>
+        <span class="form-badge-txt">Consultores disponíveis agora</span>
       </div>
-      <div class="porto-txt">
-        <div class="porto-eyebrow">Simulação via parceiro oficial</div>
-        <div class="porto-name">Porto Seguro Consórcio</div>
-        <div class="porto-cnpj">Regulada pelo Banco Central · CNPJ: 48.041.735/0001-90</div>
-        <div class="porto-badges">
-          <div class="pb">Banco Central</div>
-          <div class="pb">0% Juros</div>
-          <div class="pb">Grupo Porto</div>
+      <h2 class="form-title">Receba sua <span>simulação</span><br>gratuitamente</h2>
+      <p class="form-sub">Preencha abaixo e um consultor envia sua simulação personalizada pelo WhatsApp em até 2 horas.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="leadForm" onsubmit="submitForm(event)">
+
+        <div class="f-field">
+          <label class="f-label">Nome completo <span class="req">*</span></label>
+          <input type="text" name="nome" class="f-input" id="fNome"
+            placeholder="Seu nome" required autocomplete="name">
         </div>
+
+        <div class="f-field">
+          <label class="f-label">WhatsApp <span class="req">*</span></label>
+          <input type="tel" name="whatsapp" class="f-input" id="fWpp"
+            placeholder="(XX) XXXXX-XXXX" required
+            oninput="maskPhone(this)" autocomplete="tel">
+        </div>
+
+        <div class="f-field">
+          <label class="f-label">Qual produto está buscando? <span class="req">*</span></label>
+          <div class="prod-select" id="prodSelect">
+            <div class="prod-sel-opt" onclick="selProd('Imóvel',this)">
+              <span class="prod-sel-icon">🏠</span>
+              <span class="prod-sel-name">Imóvel</span>
+            </div>
+            <div class="prod-sel-opt" onclick="selProd('Carro',this)">
+              <span class="prod-sel-icon">🚗</span>
+              <span class="prod-sel-name">Carro</span>
+            </div>
+            <div class="prod-sel-opt" onclick="selProd('Moto',this)">
+              <span class="prod-sel-icon">🏍️</span>
+              <span class="prod-sel-name">Moto</span>
+            </div>
+            <div class="prod-sel-opt" onclick="selProd('Caminhão/Pesado',this)">
+              <span class="prod-sel-icon">🚛</span>
+              <span class="prod-sel-name">Caminhão</span>
+            </div>
+          </div>
+          <input type="hidden" name="produto" id="fProduto">
+        </div>
+
+        <div class="f-field">
+          <label class="f-label">Qual valor você está buscando? <span class="req">*</span></label>
+          <div class="faixas" id="faixasWrap">
+            <div class="faixa-opt" onclick="selFaixa('R$ 50.000,00 a R$ 100.000,00',this)">
+              <div class="faixa-radio"><div class="faixa-radio-dot"></div></div>
+              <span class="faixa-label">R$ 50.000,00 a R$ 100.000,00</span>
+            </div>
+            <div class="faixa-opt" onclick="selFaixa('R$ 101.000,00 a R$ 300.000,00',this)">
+              <div class="faixa-radio"><div class="faixa-radio-dot"></div></div>
+              <span class="faixa-label">R$ 101.000,00 a R$ 300.000,00</span>
+            </div>
+            <div class="faixa-opt" onclick="selFaixa('R$ 301.000,00 a R$ 500.000,00',this)">
+              <div class="faixa-radio"><div class="faixa-radio-dot"></div></div>
+              <span class="faixa-label">R$ 301.000,00 a R$ 500.000,00</span>
+            </div>
+            <div class="faixa-opt" onclick="selFaixa('R$ 501.000,00 a R$ 800.000,00',this)">
+              <div class="faixa-radio"><div class="faixa-radio-dot"></div></div>
+              <span class="faixa-label">R$ 501.000,00 a R$ 800.000,00</span>
+            </div>
+            <div class="faixa-opt" onclick="selFaixa('Mais de R$ 800.000,00',this)">
+              <div class="faixa-radio"><div class="faixa-radio-dot"></div></div>
+              <span class="faixa-label">Mais de R$ 800.000,00</span>
+            </div>
+          </div>
+          <input type="hidden" name="faixa" id="fFaixa">
+        </div>
+
+        <button type="submit" class="f-submit" id="fSubmit">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Quero minha simulação gratuita
+        </button>
+      </form>
+
+      <div class="form-success" id="formSuccess">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">Tudo certo!</div>
+        <p class="success-text">
+          Em breve um consultor Porto Seguro vai te enviar sua
+          <strong>simulação personalizada pelo WhatsApp</strong>
+          — incluindo as melhores estratégias para você ser contemplado
+          mais rápido e com o melhor preço.
+        </p>
       </div>
-    </div>
-    <div class="parcela-card">
-      <div class="par-name-lbl" id="parLabel">Sua parcela estimada</div>
-      <div class="par-value" id="parValue">—</div>
-      <div class="par-period" id="parPeriod">por mês · com 25% de redutor até a contemplação</div>
-      <div class="par-details">
-        <div class="pd-item"><div class="pd-val" id="pdCredit">—</div><div class="pd-lbl">Crédito</div></div>
-        <div class="pd-item"><div class="pd-val" id="pdPrazo">—</div><div class="pd-lbl">Prazo</div></div>
-        <div class="pd-item"><div class="pd-val" id="pdTaxa">—</div><div class="pd-lbl">Taxa adm.</div></div>
-        <div class="pd-item"><div class="pd-val" id="pdTotal">—</div><div class="pd-lbl">Custo total</div></div>
-      </div>
-    </div>
-    <div class="cmp-card">
-      <div class="cmp-title">Consórcio vs Financiamento bancário</div>
-      <div class="cmp-cols">
-        <div class="cmp-col">
-          <div class="cmp-tag r">🏦 Financiamento</div>
-          <div class="cmp-box rb">
-            <div class="cmp-val r" id="cmpF">—</div>
-            <div class="cmp-sub">por mês com juros</div>
+
+      <!-- O QUE ACONTECE DEPOIS -->
+      <div class="after-submit" id="afterSubmit">
+        <div class="after-title">O que acontece após o envio</div>
+        <div class="after-steps">
+          <div class="after-step">
+            <div class="after-step-num">1</div>
+            <div class="after-step-txt">Consultor envia sua simulação no WhatsApp</div>
+          </div>
+          <div class="after-step">
+            <div class="after-step-num">2</div>
+            <div class="after-step-txt">Você recebe estratégias para contemplação rápida</div>
+          </div>
+          <div class="after-step">
+            <div class="after-step-num">3</div>
+            <div class="after-step-txt">Decide com calma, sem pressão de vendas</div>
           </div>
         </div>
-        <div><div class="cmp-vs">VS</div></div>
-        <div class="cmp-col">
-          <div class="cmp-tag g">⚡ Consórcio</div>
-          <div class="cmp-box gb">
-            <div class="cmp-val g" id="cmpC">—</div>
-            <div class="cmp-sub">por mês sem juros</div>
-          </div>
-        </div>
       </div>
-      <div class="cmp-savings">
-        <div class="sv-item"><div class="sv-lbl">Economia/mês</div><div class="sv-val" id="svM">—</div></div>
-        <div class="sv-item"><div class="sv-lbl">Economia total</div><div class="sv-val" id="svT">—</div></div>
-        <div class="sv-item"><div class="sv-lbl">% mais barato</div><div class="sv-val" id="svP">—</div></div>
-      </div>
+
+      <p class="f-disclaimer">🔒 Seus dados são confidenciais. Não enviamos spam.</p>
     </div>
-    <a href="#" id="wppBtn" class="wpp-btn" target="_blank">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      <span id="wppTxt">Falar com consultor agora</span>
-    </a>
-    <div class="res-note">* Taxas reais Porto Seguro · Parcela reduzida 25% até contemplação<br>Contemplação por sorteio ou lance · FGTS sujeito às normas da CAIXA</div>
-    <button class="res-restart" onclick="restart()">← Refazer simulação</button>
   </div>
-</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">
+    <svg width="22" height="25" viewBox="0 0 40 44" fill="none">
+      <path d="M20 0L2 6v16c0 10.5 7.7 20.3 18 22 10.3-1.7 18-11.5 18-22V6L20 0z" fill="rgba(255,255,255,.2)"/>
+      <path d="M20 3L5 8.2V22c0 8.8 6.5 17 15 18.7 8.5-1.7 15-9.9 15-18.7V8.2L20 3z" fill="rgba(255,255,255,.45)"/>
+      <text x="20" y="27" text-anchor="middle" fill="white" font-family="Arial" font-weight="900" font-size="13">P</text>
+    </svg>
+    <div class="foot-name">Porto Seguro Consórcio</div>
+  </div>
+  <p class="foot-txt">
+    Parceiro autorizado Porto Seguro Administradora de Consórcios Ltda. · CNPJ: 48.041.735/0001-90<br>
+    Consórcio não tem juros · Taxa de administração e encargos previstos em contrato<br>
+    Contemplação por sorteio ou lance · Uso do FGTS sujeito às normas da CAIXA<br>
+    © 2026 · Todos os direitos reservados
+  </p>
+</footer>
 
 <script>
 /* ── CONFIG ── */
-// ⚠️ Substitua pela URL do seu Apps Script (veja arquivo COLE_NO_APPS_SCRIPT.js)
-var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz2XKV3U5WlI-r4NXG-OBYQpyBsDtiTbbQirEyoynWT1gloVigmIZLxKu77FPpveHR1EQ/exec';
-// ⚠️ Substitua pelo número com DDI+DDD, ex: 5511987654321
-var WPP_NUM = '5512982749000';
-
-/* ── CANVAS BG ── */
-(function(){
-  var c=document.getElementById('bg'),ctx=c.getContext('2d'),W,H;
-  var orbs=[
-    {x:.72,y:.18,r:360,vx:-.12,vy:.07,rgb:'0,61,165',a:.12},
-    {x:.08,y:.82,r:280,vx:.1,vy:-.05,rgb:'0,82,204',a:.08},
-    {x:.5,y:.5,r:200,vx:.07,vy:.09,rgb:'245,197,0',a:.04}
-  ];
-  function resize(){
-    W=c.width=window.innerWidth;H=c.height=window.innerHeight;
-    orbs.forEach(function(o){o.cx=o.x*W;o.cy=o.y*H;});
-  }
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    orbs.forEach(function(o){
-      var g=ctx.createRadialGradient(o.cx,o.cy,0,o.cx,o.cy,o.r);
-      g.addColorStop(0,'rgba('+o.rgb+','+o.a+')');
-      g.addColorStop(1,'rgba('+o.rgb+',0)');
-      ctx.fillStyle=g;ctx.beginPath();
-      ctx.arc(o.cx,o.cy,o.r,0,Math.PI*2);ctx.fill();
-      o.cx+=o.vx;o.cy+=o.vy;
-      if(o.cx<-o.r||o.cx>W+o.r)o.vx*=-1;
-      if(o.cy<-o.r||o.cy>H+o.r)o.vy*=-1;
-    });
-    requestAnimationFrame(draw);
-  }
-  window.addEventListener('resize',resize);
-  resize();draw();
-})();
+// ⚠️ Cole a URL do seu Apps Script aqui:
+var SHEETS_URL = 'COLE_A_URL_DO_APPS_SCRIPT_AQUI';
+// ⚠️ Número WhatsApp com DDI+DDD (ex: 5511987654321):
+var WPP_NUM = 'SEU_NUMERO';
 
 /* ── STATE ── */
-var S={name:'',phone:'',product:'',prodLabel:'',prodEmoji:'',
-  rangeLabel:'',creditMid:0,prazo:200,taxa:0,reserva:.005,
-  seguro:.00031,finTax:.105};
-var cur=0;
+var selectedProd = '';
+var selectedFaixa = '';
 
-/* ── CONFIG DATA ── */
-var CFG={
-  imovel:{label:'Imóvel',emoji:'🏠',finTax:.105,
-    s4title:'Qual faixa de <em>valor do imóvel?</em>',
-    ranges:[
-      {lbl:'R$ 70k – R$ 140k',mid:105000,prazo:200,taxa:.23,res:.005,seg:.00031},
-      {lbl:'R$ 140k – R$ 280k',mid:210000,prazo:200,taxa:.21,res:.005,seg:.00031},
-      {lbl:'R$ 280k – R$ 560k',mid:420000,prazo:200,taxa:.19,res:.005,seg:.00031},
-      {lbl:'R$ 560k – R$ 900k',mid:730000,prazo:200,taxa:.175,res:.005,seg:.00031}
-    ]},
-  carro:{label:'Carro',emoji:'🚗',finTax:.18,
-    s4title:'Qual faixa de <em>valor do carro?</em>',
-    ranges:[
-      {lbl:'R$ 30k – R$ 70k',mid:50000,prazo:80,taxa:.18,res:.005,seg:.00035},
-      {lbl:'R$ 70k – R$ 120k',mid:95000,prazo:80,taxa:.18,res:.005,seg:.00035},
-      {lbl:'R$ 120k – R$ 200k',mid:160000,prazo:80,taxa:.18,res:.005,seg:.00035}
-    ]},
-  moto:{label:'Moto',emoji:'🏍️',finTax:.22,
-    s4title:'Qual faixa de <em>valor da moto?</em>',
-    ranges:[
-      {lbl:'R$ 10k – R$ 18k',mid:14000,prazo:80,taxa:.18,res:.005,seg:.00035},
-      {lbl:'R$ 18k – R$ 30k',mid:24000,prazo:80,taxa:.18,res:.005,seg:.00035}
-    ]},
-  pesado:{label:'Caminhão/Pesado',emoji:'🚛',finTax:.12,
-    s4title:'Qual faixa de <em>valor?</em>',
-    ranges:[
-      {lbl:'R$ 180k – R$ 260k',mid:220000,prazo:120,taxa:.18,res:.005,seg:.00031},
-      {lbl:'R$ 260k – R$ 360k',mid:310000,prazo:120,taxa:.18,res:.005,seg:.00031}
-    ]}
-};
-
-/* ── HELPERS ── */
-function fmtR(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function fmtK(v){
-  if(v>=1000000)return'R$ '+(v/1000000).toFixed(1).replace('.',',')+'M';
-  if(v>=1000)return'R$ '+(v/1000).toFixed(0)+'k';
-  return'R$ '+Math.round(v);
-}
-function calcPar(credit,prazo,taxa,res,seg){
-  var cheia=credit*(1+taxa+res)/prazo+credit*seg;
-  return{cheia:cheia,red:cheia*.75};
-}
-function calcFin(credit,prazo,finTax){
-  var jm=finTax/12;
-  return credit*(jm*Math.pow(1+jm,prazo))/(Math.pow(1+jm,prazo)-1);
-}
-
-/* ── SCREEN SWITCH ── */
-function go(n){
-  document.querySelectorAll('.screen').forEach(function(s){
-    s.classList.remove('active');
+/* ── PRODUTO SELECT ── */
+function selProd(p, el) {
+  selectedProd = p;
+  document.getElementById('fProduto').value = p;
+  document.querySelectorAll('.prod-sel-opt').forEach(function(o) {
+    o.classList.remove('selected');
   });
-  var next=document.getElementById('s'+n);
-  if(next){
-    next.classList.add('active');
-    next.scrollTop=0;
-  }
-  cur=n;
-  var pcts=[0,15,30,55,75,100];
-  document.getElementById('progFill').style.width=(pcts[n]||0)+'%';
-  var steps={1:'',2:'Passo 1 de 3',3:'Passo 2 de 3',4:'Passo 3 de 3',5:'Resultado'};
-  document.getElementById('stepTxt').textContent=steps[n]||'';
+  el.classList.add('selected');
 }
 
-/* ── STEP 1: NAME ── */
-function onName(el){
-  document.getElementById('nameBtn').disabled=el.value.trim().length<2;
-}
-function doName(){
-  var v=document.getElementById('nameInp').value.trim();
-  if(v.length<2)return;
-  S.name=v;
-  var first=v.split(' ')[0];
-  document.getElementById('s2Title').innerHTML='Qual seu <em>WhatsApp,<br>'+first+'?</em>';
-  go(2);
-}
-
-/* ── STEP 2: PHONE ── */
-function onPhone(el){
-  var v=el.value.replace(/\D/g,'').substr(0,11);
-  if(v.length>6)v='('+v.substr(0,2)+') '+v.substr(2,5)+'-'+v.substr(7);
-  else if(v.length>2)v='('+v.substr(0,2)+') '+v.substr(2);
-  else if(v.length>0)v='('+v;
-  el.value=v;
-  document.getElementById('phoneBtn').disabled=v.replace(/\D/g,'').length<10;
-}
-function doPhone(){
-  var v=document.getElementById('phoneInp').value;
-  if(v.replace(/\D/g,'').length<10)return;
-  S.phone=v;
-  saveToSheets({nome:S.name,telefone:S.phone,produto:'',faixa:'',
-    credito:'',parcela:'',prazo:'',status:'Contato coletado'});
-  go(3);
-}
-
-/* ── STEP 3: PRODUCT ── */
-function doProd(p,el){
-  S.product=p;
-  var cfg=CFG[p];
-  S.prodLabel=cfg.label;S.prodEmoji=cfg.emoji;S.finTax=cfg.finTax;
-  document.getElementById('s4Title').innerHTML=cfg.s4title;
-  var grid=document.getElementById('rangeGrid');
-  grid.innerHTML=cfg.ranges.map(function(r,i){
-    var par=calcPar(r.mid,r.prazo,r.taxa,r.res,r.seg);
-    return '<div class="range-card" onclick="doRange('+i+',this)" style="transition-delay:'+i*.07+'s">'+
-      '<div class="rc-credit-lbl">Crédito estimado</div>'+
-      '<div class="rc-range">'+r.lbl+'</div>'+
-      '<div class="rc-div"></div>'+
-      '<div class="rc-par-lbl">Parcela a partir de</div>'+
-      '<div class="rc-par">'+fmtR(par.red)+'<span class="rc-par-per">/mês</span></div>'+
-      '<div class="rc-par-note">↓ 25% menor até contemplação</div>'+
-      '</div>';
-  }).join('');
-  setTimeout(function(){
-    grid.querySelectorAll('.range-card').forEach(function(c,i){
-      setTimeout(function(){c.classList.add('in');},i*75);
+/* ── PRODUTO CARD click (seção produtos) ── */
+function selectProduto(p, el) {
+  document.getElementById('formulario').scrollIntoView({behavior:'smooth'});
+  setTimeout(function() {
+    var opts = document.querySelectorAll('.prod-sel-opt');
+    opts.forEach(function(o) {
+      if(o.querySelector('.prod-sel-name').textContent.indexOf(p.split('/')[0]) > -1) {
+        selProd(p, o);
+      }
     });
-  },30);
-  el.style.borderColor='#F5C500';
-  el.style.background='rgba(0,61,165,.35)';
-  setTimeout(function(){go(4);},350);
+  }, 600);
 }
 
-/* ── STEP 4: RANGE ── */
-function doRange(idx,el){
-  var r=CFG[S.product].ranges[idx];
-  S.rangeLabel=r.lbl;S.creditMid=r.mid;S.prazo=r.prazo;
-  S.taxa=r.taxa;S.reserva=r.res;S.seguro=r.seg;
-  el.style.borderColor='#F5C500';
-  el.style.background='rgba(245,197,0,.1)';
-  setTimeout(function(){buildResult();go(5);},350);
+/* ── FAIXA SELECT ── */
+function selFaixa(f, el) {
+  selectedFaixa = f;
+  document.getElementById('fFaixa').value = f;
+  document.querySelectorAll('.faixa-opt').forEach(function(o) {
+    o.classList.remove('selected');
+  });
+  el.classList.add('selected');
 }
 
-/* ── BUILD RESULT ── */
-function buildResult(){
-  var creditMid=S.creditMid,prazo=S.prazo,taxa=S.taxa;
-  var reserva=S.reserva,seguro=S.seguro,finTax=S.finTax;
-  var par=calcPar(creditMid,prazo,taxa,reserva,seguro);
-  var fin=calcFin(creditMid,prazo,finTax);
-  var custoTotal=par.cheia*prazo;
-  var finTotal=fin*prazo;
-  var ecoM=fin-par.red;
-  var ecoT=finTotal-custoTotal;
-  var ecoPct=Math.round((ecoM/fin)*100);
-  var first=S.name.split(' ')[0];
-
-  document.getElementById('parLabel').textContent=first+', sua parcela estimada é';
-  document.getElementById('parValue').textContent=fmtR(par.red);
-  document.getElementById('parPeriod').textContent=
-    'por mês · '+S.prodLabel+' · '+prazo+'x · com 25% de redutor até contemplação';
-  document.getElementById('pdCredit').textContent=fmtK(creditMid);
-  document.getElementById('pdPrazo').textContent=prazo+'x';
-  document.getElementById('pdTaxa').textContent=(taxa*100).toFixed(1)+'%';
-  document.getElementById('pdTotal').textContent=fmtK(custoTotal);
-  document.getElementById('cmpF').textContent=fmtR(fin);
-  document.getElementById('cmpC').textContent=fmtR(par.red);
-  document.getElementById('svM').textContent=fmtR(ecoM);
-  document.getElementById('svT').textContent=fmtK(ecoT);
-  document.getElementById('svP').textContent=ecoPct+'% menos';
-
-  var msg=encodeURIComponent(
-    'Olá! Sou '+S.name+' e fiz uma simulação no site da Apê 77.\n\n'+
-    S.prodEmoji+' *'+S.prodLabel+'*: '+S.rangeLabel+'\n'+
-    '💰 Parcela estimada: *'+fmtR(par.red)+'/mês*\n'+
-    '📱 WhatsApp: '+S.phone+'\n\n'+
-    'Quero falar com um consultor!'
-  );
-  document.getElementById('wppBtn').href='https://wa.me/'+WPP_NUM+'?text='+msg;
-  document.getElementById('wppTxt').textContent='Falar com consultor agora, '+first+'!';
-
-  saveToSheets({nome:S.name,telefone:S.phone,produto:S.prodLabel,
-    faixa:S.rangeLabel,credito:fmtK(creditMid),parcela:fmtR(par.red),
-    prazo:prazo+'x',status:'Simulação Completa'});
+/* ── PHONE MASK ── */
+function maskPhone(el) {
+  var v = el.value.replace(/\D/g,'').substr(0,11);
+  if(v.length > 6) v = '(' + v.substr(0,2) + ') ' + v.substr(2,5) + '-' + v.substr(7);
+  else if(v.length > 2) v = '(' + v.substr(0,2) + ') ' + v.substr(2);
+  else if(v.length > 0) v = '(' + v;
+  el.value = v;
 }
 
-/* ── SAVE TO SHEETS ── */
-function saveToSheets(data){
-  if(!SHEETS_URL||SHEETS_URL.indexOf('COLE')>-1)return;
-  fetch(SHEETS_URL,{method:'POST',mode:'no-cors',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(data)
-  }).catch(function(){});
-  var badge=document.getElementById('statusBadge');
+/* ── SUBMIT ── */
+function submitForm(e) {
+  e.preventDefault();
+  var nome  = document.getElementById('fNome').value.trim();
+  var wpp   = document.getElementById('fWpp').value.trim();
+  var prod  = document.getElementById('fProduto').value;
+  var faixa = document.getElementById('fFaixa').value;
+
+  // Validação
+  if(!nome) { shake('fNome'); return; }
+  if(wpp.replace(/\D/g,'').length < 10) { shake('fWpp'); return; }
+  if(!prod) { shakeEl('prodSelect'); return; }
+  if(!faixa) { shakeEl('faixasWrap'); return; }
+
+  // Disable button
+  var btn = document.getElementById('fSubmit');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  // Save to sheets
+  var data = {
+    nome: nome, telefone: wpp,
+    produto: prod, faixa: faixa,
+    credito: faixa, parcela: '—',
+    prazo: '—', status: 'Lead Completo'
+  };
+
+  if(SHEETS_URL && SHEETS_URL.indexOf('COLE') === -1) {
+    fetch(SHEETS_URL, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    }).catch(function(){});
+  }
+
+  // Show success
+  document.getElementById('leadForm').style.display = 'none';
+  document.getElementById('afterSubmit').style.display = 'none';
+  document.getElementById('formSuccess').classList.add('show');
+
+  // Show badge
+  var badge = document.getElementById('statusBadge');
   badge.classList.add('show');
-  setTimeout(function(){badge.classList.remove('show');},2500);
+  setTimeout(function(){badge.classList.remove('show');}, 2500);
+
+  // Open WhatsApp after 1.5s
+  var msg = encodeURIComponent(
+    'Olá! Me chamo ' + nome + ' e acabei de preencher o formulário.\n\n' +
+    '📦 Produto: ' + prod + '\n' +
+    '💰 Faixa: ' + faixa + '\n' +
+    '📱 WhatsApp: ' + wpp + '\n\n' +
+    'Gostaria de receber minha simulação!'
+  );
+  setTimeout(function() {
+    window.open('https://wa.me/' + WPP_NUM + '?text=' + msg, '_blank');
+  }, 1500);
 }
 
-/* ── KEYBOARD ── */
-document.addEventListener('keydown',function(e){
-  if(e.key!=='Enter')return;
-  if(cur===1)doName();
-  else if(cur===2)doPhone();
+/* ── SHAKE VALIDATION ── */
+function shake(id) {
+  var el = document.getElementById(id);
+  el.style.borderColor = '#dc2626';
+  el.style.animation = 'none';
+  setTimeout(function(){
+    el.style.animation = '';
+    el.style.borderColor = '';
+  }, 1500);
+  el.focus();
+}
+function shakeEl(id) {
+  var el = document.getElementById(id);
+  el.style.outline = '2px solid #dc2626';
+  el.style.borderRadius = '10px';
+  setTimeout(function(){el.style.outline = '';}, 1500);
+}
+
+/* ── SCROLL REVEAL ── */
+var revObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if(e.isIntersecting) e.target.classList.add('in');
+  });
+}, {threshold: .12});
+document.querySelectorAll('.reveal').forEach(function(el) {
+  revObs.observe(el);
 });
-
-/* ── RESTART ── */
-function restart(){
-  S={name:'',phone:'',product:'',prodLabel:'',prodEmoji:'',
-    rangeLabel:'',creditMid:0,prazo:200,taxa:0,reserva:.005,
-    seguro:.00031,finTax:.105};
-  document.getElementById('nameInp').value='';
-  document.getElementById('phoneInp').value='';
-  document.getElementById('nameBtn').disabled=true;
-  document.getElementById('phoneBtn').disabled=true;
-  document.querySelectorAll('.prod-card').forEach(function(c){
-    c.style.borderColor='';c.style.background='';c.classList.remove('in');
-  });
-  go(0);
-}
-
-/* ── ANIMATE PROD CARDS ON S3 ── */
-new MutationObserver(function(muts){
-  muts.forEach(function(m){
-    if(m.target.id==='s3'&&m.target.classList.contains('active')){
-      document.querySelectorAll('.prod-card').forEach(function(c,i){
-        setTimeout(function(){c.classList.add('in');},i*85);
-      });
-    }
-    if(m.target.id==='s3'&&!m.target.classList.contains('active')){
-      document.querySelectorAll('.prod-card').forEach(function(c){
-        c.classList.remove('in');
-      });
-    }
-  });
-}).observe(document.getElementById('s3'),{attributes:true,attributeFilter:['class']});
-
-/* ── INIT: attach hero button ── */
-document.getElementById('heroCta').addEventListener('click',function(){go(1);});
 </script>
 </body>
 </html>
